@@ -19,9 +19,9 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\TablesCreateMShop
 	 *
 	 * @return array List of task names
 	 */
-	public function getPostDependencies()
+	public function getPreDependencies()
 	{
-		return array();
+		return array( 'TablesCreateEzpublish' );
 	}
 
 
@@ -72,6 +72,7 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\TablesCreateMShop
 			'salutation' => array( 'string', array( 'length' => 8 ) ),
 			'title' => array( 'string', array( 'length' => 64 ) ),
 			'firstname' => array( 'string', array( 'length' => 64 ) ),
+			'lastname' => array( 'string', array( 'length' => 64 ) ),
 			'address1' => array( 'string', array( 'length' => 255 ) ),
 			'address2' => array( 'string', array( 'length' => 255 ) ),
 			'address3' => array( 'string', array( 'length' => 255 ) ),
