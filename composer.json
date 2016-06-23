@@ -1,0 +1,25 @@
+{
+	"name": "aimeos/ai-ezpublish",
+	"description": "Aimeos ezPublish integration",
+	"keywords": ["aimeos", "extension", "ezpublish", "ezplatform", "adapter"],
+	"type": "aimeos-extension",
+	"license": "LGPL-3.0",
+	"prefer-stable": true,
+	"minimum-stability": "dev",
+	"require": {
+		"php": ">=5.3.3",
+		"composer/installers": "^1.0"
+	},
+	"require-dev": {
+		"ezsystems/ezpublish-api": "~5.0",
+		"phing/phing": "~2.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"Aimeos\\MShop\\": "lib/mshoplib/src/MShop/"
+		},
+		"classmap": [
+			"lib/custom/src"
+		]
+	}
+}

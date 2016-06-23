@@ -1,0 +1,3 @@
+src_dir: ext/ai-ezpublish
+json_path: ext/ai-ezpublish/coveralls.json
+coverage_clover: ext/ai-ezpublish/lib/custom/tests/coverage.xml
