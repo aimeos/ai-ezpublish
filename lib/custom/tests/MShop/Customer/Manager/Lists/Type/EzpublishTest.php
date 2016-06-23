@@ -37,6 +37,13 @@ class EzpublishTest extends \PHPUnit_Framework_TestCase
 	}
 
 
+	public function testGetSubManager()
+	{
+		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
+		$this->object->getSubManager( 'unknown' );
+	}
+
+
 	public function testCreateItem()
 	{
 		$item = $this->object->createItem();
