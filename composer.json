@@ -8,10 +8,10 @@
 	"minimum-stability": "dev",
 	"require": {
 		"php": ">=5.3.3",
+		"doctrine/dbal": "~2.0",
 		"composer/installers": "^1.0"
 	},
 	"require-dev": {
-		"ezsystems/ezpublish-api": "~5.0",
 		"phing/phing": "~2.0"
 	},
 	"autoload": {

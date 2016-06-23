@@ -90,7 +90,6 @@ class CustomerAddEzpublishTestData extends \Aimeos\MW\Setup\Task\CustomerAddTest
 		$ezContext->setConfig( clone $context->getConfig() );
 		$ezContext->setCache( clone $context->getCache() );
 
-		$task = $this;
 
 		$ezContext->setEzUser( function( $code, $email, $password ) use ( $context ) {
 
@@ -126,6 +125,7 @@ class CustomerAddEzpublishTestData extends \Aimeos\MW\Setup\Task\CustomerAddTest
 
 			return $id;
 		} );
+
 
 		return $ezContext;
 	}

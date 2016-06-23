@@ -40,7 +40,6 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\TablesCreateMShop
 
 
 		$fromSchema = $dbal->getSchemaManager()->createSchema();
-		$comparator = new \Doctrine\DBAL\Schema\Comparator();
 		$toSchema = clone $fromSchema;
 
 		$this->addIndexes( $this->addColumns( $toSchema->getTable( 'ezuser' ) ) );
