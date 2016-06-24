@@ -2,8 +2,15 @@
 	"name": "aimeos/ai-ezpublish",
 	"description": "Aimeos ezPublish integration",
 	"keywords": ["aimeos", "extension", "ezpublish", "ezplatform", "adapter"],
+	"homepage": "https://aimeos.org/eZPublish",
 	"type": "aimeos-extension",
 	"license": "LGPL-3.0",
+	"support": {
+		"source": "https://github.com/aimeos/ai-ezpublish",
+		"issues": "https://github.com/aimeos/ai-ezpublish/issues",
+		"forum": "https://aimeos.org/help",
+		"wiki": "https://aimeos.org/docs"
+	},
 	"prefer-stable": true,
 	"minimum-stability": "dev",
 	"require": {
