@@ -296,12 +296,10 @@ class Ezpublish
 			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Object is not of required type "%1$s"', $class ) );
 		}
 
-		if( $item->getId() === null )
-		{
-			$fcn = $context->getEzUser();
-			$contentId = $fcn( $item->getCode(), $item->getPaymentAddress()->getEmail(), $item->getPassword() );
-			$item->setId( $contentId );
-		}
+		$fcn = $context->getEzUser();
+		$email = $item->getPaymentAddress()->getEmail();
+		$contentId = $fcn( $item->getId(), $item->getCode(), $email, $item->getPassword(), $item->getStatus() );
+		$item->setId( $contentId );
 
 		$dbm = $context->getDatabaseManager();
 		$dbname = $this->getResourceName();
@@ -316,46 +314,31 @@ class Ezpublish
 			$path = 'mshop/customer/manager/ezpublish/update';
 			$stmt = $this->getCachedStatement( $conn, $path );
 
-			$stmt->bind( 1, $item->getCode() ); // login normalized
-			$stmt->bind( 2, $item->getCode() ); // login
-			$stmt->bind( 3, $billingAddress->getCompany() );
-			$stmt->bind( 4, $billingAddress->getVatID() );
-			$stmt->bind( 5, $billingAddress->getSalutation() );
-			$stmt->bind( 6, $billingAddress->getTitle() );
-			$stmt->bind( 7, $billingAddress->getFirstname() );
-			$stmt->bind( 8, $billingAddress->getLastname() );
-			$stmt->bind( 9, $billingAddress->getAddress1() );
-			$stmt->bind( 10, $billingAddress->getAddress2() );
-			$stmt->bind( 11, $billingAddress->getAddress3() );
-			$stmt->bind( 12, $billingAddress->getPostal() );
-			$stmt->bind( 13, $billingAddress->getCity() );
-			$stmt->bind( 14, $billingAddress->getState() );
-			$stmt->bind( 15, $billingAddress->getCountryId() );
-			$stmt->bind( 16, $billingAddress->getLanguageId() );
-			$stmt->bind( 17, $billingAddress->getTelephone() );
-			$stmt->bind( 18, $billingAddress->getEmail() );
-			$stmt->bind( 19, $billingAddress->getTelefax() );
-			$stmt->bind( 20, $billingAddress->getWebsite() );
-			$stmt->bind( 21, $item->getBirthday() );
-			$stmt->bind( 22, $item->getStatus(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
-			$stmt->bind( 23, $item->getDateVerified() );
-			$stmt->bind( 24, $item->getPassword() );
-			$stmt->bind( 25, $date ); // Modification time
-			$stmt->bind( 26, $context->getEditor() );
-			$stmt->bind( 27, $ctime ); // Creation time
-			$stmt->bind( 28, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+			$stmt->bind( 1, $billingAddress->getCompany() );
+			$stmt->bind( 2, $billingAddress->getVatID() );
+			$stmt->bind( 3, $billingAddress->getSalutation() );
+			$stmt->bind( 4, $billingAddress->getTitle() );
+			$stmt->bind( 5, $billingAddress->getFirstname() );
+			$stmt->bind( 6, $billingAddress->getLastname() );
+			$stmt->bind( 7, $billingAddress->getAddress1() );
+			$stmt->bind( 8, $billingAddress->getAddress2() );
+			$stmt->bind( 9, $billingAddress->getAddress3() );
+			$stmt->bind( 10, $billingAddress->getPostal() );
+			$stmt->bind( 11, $billingAddress->getCity() );
+			$stmt->bind( 12, $billingAddress->getState() );
+			$stmt->bind( 13, $billingAddress->getCountryId() );
+			$stmt->bind( 14, $billingAddress->getLanguageId() );
+			$stmt->bind( 15, $billingAddress->getTelephone() );
+			$stmt->bind( 16, $billingAddress->getTelefax() );
+			$stmt->bind( 17, $billingAddress->getWebsite() );
+			$stmt->bind( 18, $item->getBirthday() );
+			$stmt->bind( 19, $item->getDateVerified() );
+			$stmt->bind( 20, $date ); // Modification time
+			$stmt->bind( 21, $context->getEditor() );
+			$stmt->bind( 22, $ctime ); // Creation time
+			$stmt->bind( 23, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
 
 			$stmt->execute()->finish();
-
-
-			$path = 'mshop/customer/manager/ezpublish/update-status';
-			$stmt = $this->getCachedStatement( $conn, $path );
-
-			$stmt->bind( 1, $item->getStatus(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
-			$stmt->bind( 2, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
-
-			$stmt->execute()->finish();
-
 
 			$dbm->release( $conn, $dbname );
 		}
@@ -436,6 +419,6 @@ class Ezpublish
 		$helper = $this->getPasswordHelper();
 		$address = $this->addressManager->createItem();
 
-		return new \Aimeos\MShop\Customer\Item\Standard( $address, $values, $listItems, $refItems, null, $helper );
+		return new \Aimeos\MShop\Customer\Item\Ezpublish( $address, $values, $listItems, $refItems, null, $helper );
 	}
 }

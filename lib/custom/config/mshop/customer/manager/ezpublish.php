@@ -15,21 +15,12 @@ return array(
 	'update' => array(
 		'ansi' => '
 			UPDATE "ezuser"
-			SET "login_normalized" = ?, "login" = ?, "company" = ?, "vatid" = ?,
-				"salutation" = ?, "title" = ?, "firstname" = ?, "lastname" = ?,
-				"address1" = ?, "address2" = ?, "address3" = ?, "postal" = ?,
-				"city" = ?, "state" = ?, "countryid" = ?, "langid" = ?,
-				"telephone" = ?, "email" = ?, "telefax" = ?, "website" = ?,
-				"birthday" = ?, "status" = ?, "vdate" = ?, "password_hash" = ?,
+			SET "company" = ?, "vatid" = ?, "salutation" = ?, "title" = ?,
+				"firstname" = ?, "lastname" = ?, "address1" = ?, "address2" = ?, "address3" = ?,
+				"postal" = ?, "city" = ?, "state" = ?, "countryid" = ?, "langid" = ?,
+				"telephone" = ?, "telefax" = ?, "website" = ?, "birthday" = ?, "vdate" = ?,
 				"mtime" = ?, "editor" = ?, "ctime" = ?
 			WHERE "contentobject_id" = ?
-		',
-	),
-	'update-status' => array(
-		'ansi' => '
-			UPDATE "ezuser_setting"
-			SET "is_enabled" = ?
-			WHERE "user_id" = ?
 		',
 	),
 	'search' => array(

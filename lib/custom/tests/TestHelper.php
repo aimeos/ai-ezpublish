@@ -91,38 +91,44 @@ class TestHelper
 		$ctx->setEditor( 'ai-ezpublish:unittest' );
 
 
-		$ctx->setEzUser( function( $code, $email, $password ) use ( $ctx ) {
+		$ctx->setEzUser( function( $id, $code, $email, $password, $status ) use ( $ctx ) {
 
-			$id = mt_rand( -0x7fffffff,-1 );
 			$dbm = $ctx->getDatabaseManager();
-			$dbconf = $ctx->getConfig()->get( 'resource/db-customer' );
-			$dbname = ( $dbconf ? 'db-customer' : 'db' );
+			$dbname = ( $ctx->getConfig()->get( 'resource/db-customer' ) ? 'db-customer' : 'db' );
 			$conn = $dbm->acquire( $dbname );
 
 			try
 			{
-				$stmt = $conn->create( 'INSERT INTO "ezuser" (
-					"contentobject_id", "email", "login", "login_normalized", "password_hash", "password_hash_type"
-				) VALUES (
-					?, ?, ?, ?, ?, 5
-				)' );
+				$contentid = ( $id === null ? mt_rand( -0x7fffffff,-1 ) : $id );
 
-				$stmt->bind( 1, $id, \Aimeos\MW\DB\Statement\Base::PARAM_INT );
-				$stmt->bind( 2, $email );
-				$stmt->bind( 3, $code );
-				$stmt->bind( 4, $code );
-				$stmt->bind( 5, $password );
+				if( $id === null ) {
+					$sql = 'INSERT INTO "ezuser" ( "email", "login", "login_normalized", "password_hash", "password_hash_type", "contentobject_id" ) VALUES ( ?, ?, ?, ?, 5, ? )';
+				} else {
+					$sql = 'UPDATE "ezuser" SET "email" = ?, "login" = ?, "login_normalized" = ?, "password_hash" = ?, "password_hash_type" = 5 WHERE "contentobject_id" = ?';
+				}
 
-				$stmt->execute()->finish();
-
-				$sql = 'INSERT INTO "ezuser_setting" ( "user_id", "is_enabled", "max_login" ) VALUES ( ?, ?, ? )';
 				$stmt = $conn->create( $sql );
-
-				$stmt->bind( 1, $id, \Aimeos\MW\DB\Statement\Base::PARAM_INT );
-				$stmt->bind( 2, 0 );
-				$stmt->bind( 3, 10 );
+				$stmt->bind( 1, $email );
+				$stmt->bind( 2, $code );
+				$stmt->bind( 3, $code );
+				$stmt->bind( 4, $password );
+				$stmt->bind( 5, $contentid, \Aimeos\MW\DB\Statement\Base::PARAM_INT );
 
 				$stmt->execute()->finish();
+
+
+				if( $id === null ) {
+					$sql = 'INSERT INTO "ezuser_setting" ( "is_enabled", "user_id" ) VALUES ( ?, ? )';
+				} else {
+					$sql = 'UPDATE "ezuser_setting" SET "is_enabled" = ? WHERE "user_id" = ?';
+				}
+
+				$stmt = $conn->create( $sql );
+				$stmt->bind( 1, $status, \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+				$stmt->bind( 2, $contentid, \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+
+				$stmt->execute()->finish();
+
 
 				$dbm->release( $conn, $dbname );
 			}
@@ -132,7 +138,7 @@ class TestHelper
 				throw $e;
 			}
 
-			return $id;
+			return $contentid;
 		} );
 
 
