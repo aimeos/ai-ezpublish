@@ -115,6 +115,15 @@ class CustomerAddEzpublishTestData extends \Aimeos\MW\Setup\Task\CustomerAddTest
 
 				$stmt->execute()->finish();
 
+				$sql = 'INSERT INTO "ezuser_setting" ( "user_id", "is_enabled", "max_login" ) VALUES ( ?, ?, ? )';
+				$stmt = $conn->create( $sql );
+
+				$stmt->bind( 1, $id, \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+				$stmt->bind( 2, 0 );
+				$stmt->bind( 3, 10 );
+
+				$stmt->execute()->finish();
+
 				$dbm->release( $conn, $dbname );
 			}
 			catch( \Exception $e )

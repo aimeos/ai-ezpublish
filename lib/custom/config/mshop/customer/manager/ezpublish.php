@@ -25,6 +25,13 @@ return array(
 			WHERE "contentobject_id" = ?
 		',
 	),
+	'update-status' => array(
+		'ansi' => '
+			UPDATE "ezuser_setting"
+			SET "is_enabled" = ?
+			WHERE "user_id" = ?
+		',
+	),
 	'search' => array(
 		'ansi' => '
 			SELECT DISTINCT ezu."contentobject_id" AS "customer.id",
@@ -38,11 +45,12 @@ return array(
 				ezu."countryid" AS "customer.countryid", ezu."langid" AS "customer.languageid",
 				ezu."telephone" AS "customer.telephone", ezu."email" AS "customer.email",
 				ezu."telefax" AS "customer.telefax", ezu."website" AS "customer.website",
-				ezu."birthday" AS "customer.birthday", ezu."status" as "customer.status",
-				ezu."vdate" AS "customer.vdate", ezu."password_hash" AS "customer.password",
-				ezu."ctime" AS "customer.ctime", ezu."mtime" AS "customer.mtime",
-				ezu."editor" AS "customer.editor"
+				ezu."birthday" AS "customer.birthday", ezu."vdate" AS "customer.vdate",
+				ezu."password_hash" AS "customer.password", ezu."ctime" AS "customer.ctime",
+				ezu."mtime" AS "customer.mtime", ezu."editor" AS "customer.editor",
+				ezs."is_enabled" as "customer.status"
 			FROM "ezuser" AS ezu
+			LEFT JOIN "ezuser_setting" as ezs ON ezu."contentobject_id" = ezs."user_id"
 			:joins
 			WHERE :cond
 			/*-orderby*/ ORDER BY :order /*orderby-*/
@@ -55,6 +63,7 @@ return array(
 			FROM (
 				SELECT DISTINCT ezu."contentobject_id"
 				FROM "ezuser" AS ezu
+				LEFT JOIN "ezuser_setting" as ezs ON ezu."contentobject_id" = ezs."user_id"
 				:joins
 				WHERE :cond
 				LIMIT 10000 OFFSET 0

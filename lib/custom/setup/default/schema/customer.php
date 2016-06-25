@@ -25,6 +25,19 @@ return array(
 			return $schema;
 		},
 
+		'ezuser_setting' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+
+			$table = $schema->createTable( 'ezuser_setting' );
+
+			$table->addColumn( 'is_enabled', 'integer', array() );
+			$table->addColumn( 'max_login', 'integer', array( 'notnull' => false ) );
+			$table->addColumn( 'user_id', 'integer', array() );
+
+			$table->setPrimaryKey( array( 'user_id' ) );
+
+			return $schema;
+		},
+
 		'ezuser_address' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser_address' );

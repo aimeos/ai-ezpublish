@@ -186,7 +186,7 @@ class Ezpublish
 		'customer.status'=> array(
 			'label' => 'Customer status',
 			'code' => 'customer.status',
-			'internalcode' => 'ezu."status"',
+			'internalcode' => 'ezs."is_enabled"',
 			'type' => 'integer',
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT
 		),
@@ -313,34 +313,7 @@ class Ezpublish
 			$ctime = ( $item->getTimeCreated() ? $item->getTimeCreated() : $date );
 			$billingAddress = $item->getPaymentAddress();
 
-			/** mshop/customer/manager/ezpublish/update
-			 * Updates an existing customer record in the database
-			 *
-			 * Items which already have an ID (i.e. the ID is not NULL) will
-			 * be updated in the database.
-			 *
-			 * The SQL statement must be a string suitable for being used as
-			 * prepared statement. It must include question marks for binding
-			 * the values from the customer item to the statement before they are
-			 * sent to the database server. The order of the columns must
-			 * correspond to the order in the saveItems() method, so the
-			 * correct values are bound to the columns.
-			 *
-			 * The SQL statement should conform to the ANSI standard to be
-			 * compatible with most relational database systems. This also
-			 * includes using double quotes for table and column names.
-			 *
-			 * @param string SQL statement for updating records
-			 * @since 2016.07
-			 * @category Developer
-			 * @see mshop/customer/manager/ezpublish/insert
-			 * @see mshop/customer/manager/ezpublish/newid
-			 * @see mshop/customer/manager/ezpublish/delete
-			 * @see mshop/customer/manager/ezpublish/search
-			 * @see mshop/customer/manager/ezpublish/count
-			 */
 			$path = 'mshop/customer/manager/ezpublish/update';
-
 			$stmt = $this->getCachedStatement( $conn, $path );
 
 			$stmt->bind( 1, $item->getCode() ); // login normalized
@@ -373,6 +346,16 @@ class Ezpublish
 			$stmt->bind( 28, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
 
 			$stmt->execute()->finish();
+
+
+			$path = 'mshop/customer/manager/ezpublish/update-status';
+			$stmt = $this->getCachedStatement( $conn, $path );
+
+			$stmt->bind( 1, $item->getStatus(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+			$stmt->bind( 2, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+
+			$stmt->execute()->finish();
+
 
 			$dbm->release( $conn, $dbname );
 		}
