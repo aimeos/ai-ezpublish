@@ -140,7 +140,7 @@ class Ezpublish
 			$this->getSubManager( $domain )->cleanup( $siteids );
 		}
 
-		$this->cleanupBase( $siteids, 'mshop/customer/manager/lists/ezpublish/delete' );
+		$this->cleanupBase( $siteids, $this->getConfigPath() . 'delete' );
 	}
 
 
@@ -154,7 +154,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/lists/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, array( 'type' ), $withsub );
+		return $this->getSearchAttributesBase( $this->getSearchConfig(), $path, array( 'type' ), $withsub );
 	}
 
 
@@ -168,6 +168,27 @@ class Ezpublish
 	public function getSubManager( $manager, $name = null )
 	{
 		return $this->getSubManagerBase( 'customer', 'lists/' . $manager, ( $name === null ? 'Ezpublish' : $name ) );
+	}
+
+
+	/**
+	 * Updates or adds a common list item object.
+	 *
+	 * @param \Aimeos\MShop\Common\Item\Lists\Iface $item List item object which should be saved
+	 * @param boolean $fetch True if the new ID should be returned in the item
+	 */
+	public function saveItem( \Aimeos\MShop\Common\Item\Iface $item, $fetch = true )
+	{
+		$iface = '\\Aimeos\\MShop\\Common\\Item\\Lists\\Iface';
+		if( !( $item instanceof $iface ) ) {
+			throw new \Aimeos\MShop\Exception( sprintf( 'Object is not of required type "%1$s"', $iface ) );
+		}
+
+		if( $item->getDomain() === 'customer/group' ) {
+			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Adding groups to customers is not supported, please use the eZ Publish backend' ) );
+		}
+
+		parent::saveItem( $item, $fetch );
 	}
 
 

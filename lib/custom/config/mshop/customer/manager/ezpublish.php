@@ -6,12 +6,6 @@
  */
 
 return array(
-	'delete' => array(
-		'ansi' => '
-			DELETE FROM "ezuser"
-			WHERE :cond
-		',
-	),
 	'update' => array(
 		'ansi' => '
 			UPDATE "ezuser"

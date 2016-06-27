@@ -225,8 +225,7 @@ class Ezpublish
 	 */
 	public function deleteItems( array $ids )
 	{
-		$path = 'mshop/customer/manager/address/ezpublish/delete';
-		$this->deleteItemsBase( $ids, $path, false );
+		$this->deleteItemsBase( $ids, $this->getConfigPath() . 'delete', false );
 	}
 
 
@@ -240,7 +239,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/address/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, array(), $withsub );
+		return $this->getSearchAttributesBase( $this->getSearchConfig(), $path, array(), $withsub );
 	}
 
 

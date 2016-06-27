@@ -19,33 +19,33 @@ namespace Aimeos\MShop\Context\Item;
  */
 class Ezpublish extends \Aimeos\MShop\Context\Item\Standard
 {
-	private $ezUser;
+	private $ezUserService;
 
 
 	/**
-	 * Sets the user creating function
+	 * Sets the eZ user service object
 	 *
-	 * @param \Closure $userfcn Function to create a new user and return its ID
+	 * @param \eZ\Publish\API\Repository\UserService $service eZ user service object
 	 * @return \Aimeos\MShop\Context\Item\Iface Context item for chaining method calls
 	 */
-	public function setEzUser( \Closure $userfcn )
+	public function setEzUserService( \eZ\Publish\API\Repository\UserService $service )
 	{
-		$this->ezUser = $userfcn;
+		$this->ezUserService = $service;
 		return $this;
 	}
 
 
 	/**
-	 * Returns the user creating function
+	 * Returns the eZ user service object
 	 *
-	 * @return \Closure Function to create a new user and return its ID
+	 * @return \eZ\Publish\API\Repository\UserService eZ user service object
 	 */
-	public function getEzUser()
+	public function getEzUserService()
 	{
-		if( !isset( $this->ezUser ) ) {
-			throw new \Aimeos\MShop\Exception( sprintf( 'eZ user function not available' ) );
+		if( !isset( $this->ezUserService ) ) {
+			throw new \Aimeos\MShop\Exception( sprintf( 'eZ user service not available' ) );
 		}
 
-		return $this->ezUser;
+		return $this->ezUserService;
 	}
 }

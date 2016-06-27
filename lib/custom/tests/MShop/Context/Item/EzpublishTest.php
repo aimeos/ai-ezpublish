@@ -16,29 +16,33 @@ class EzpublishTest extends \PHPUnit_Framework_TestCase
 
 	protected function setUp()
 	{
+		if( !interface_exists( 'eZ\Publish\API\Repository\UserService' ) ) {
+			$this->markTestSkipped( 'Install ezsystems/ezpublish-api first' );
+		}
+
+		$this->mock = $this->getMockBuilder( 'eZ\Publish\API\Repository\UserService' )->getMock();
 		$this->object = new \Aimeos\MShop\Context\Item\Ezpublish();
 	}
 
 
 	protected function tearDown()
 	{
-		unset( $this->object );
+		unset( $this->object, $this->mock );
 	}
 
 
-	public function testGetEzUser()
+	public function testGetEzUserService()
 	{
 		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
-		$this->object->getEzUser();
+		$this->object->getEzUserService();
 	}
 
 
-	public function testSetEzUser()
+	public function testSetEzUserService()
 	{
-		$closure = function() {};
-		$return = $this->object->setEzUser( $closure );
+		$return = $this->object->setEzUserService( $this->mock );
 
-		$this->assertSame( $closure, $this->object->getEzUser() );
+		$this->assertSame( $this->mock, $this->object->getEzUserService() );
 		$this->assertInstanceOf( '\Aimeos\MShop\Context\Item\Iface', $return );
 	}
 }

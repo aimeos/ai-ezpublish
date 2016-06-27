@@ -238,14 +238,28 @@ class Ezpublish
 
 
 	/**
+	 * Instantiates a new customer item object.
+	 *
+	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item object
+	 */
+	public function createItem()
+	{
+		return $this->createItemBase();
+	}
+
+
+	/**
 	 * Removes multiple items specified by ids in the array.
 	 *
 	 * @param array $ids List of IDs
 	 */
 	public function deleteItems( array $ids )
 	{
-		$path = 'mshop/customer/manager/ezpublish/delete';
-		$this->deleteItemsBase( $ids, $path, false, 'contentobject_id' );
+		$service = $this->getContext()->getEzUserService();
+
+		foreach( $ids as $id ) {
+			$service->deleteUser( $service->loadUser( $id ) );
+		}
 	}
 
 
@@ -264,13 +278,15 @@ class Ezpublish
 
 
 	/**
-	 * Instantiates a new customer item object.
+	 * Returns a new manager for customer extensions
 	 *
-	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item object
+	 * @param string $manager Name of the sub manager type in lower case
+	 * @param string|null $name Name of the implementation, will be from configuration (or Default) if null
+	 * @return mixed Manager for different extensions, e.g stock, tags, locations, etc.
 	 */
-	public function createItem()
+	public function getSubManager( $manager, $name = null )
 	{
-		return $this->createItemBase();
+		return $this->getSubManagerBase( 'customer', $manager, ( $name === null ? 'Ezpublish' : $name ) );
 	}
 
 
@@ -296,10 +312,27 @@ class Ezpublish
 			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Object is not of required type "%1$s"', $class ) );
 		}
 
-		$fcn = $context->getEzUser();
+		$service = $context->getEzUserService();
 		$email = $item->getPaymentAddress()->getEmail();
-		$contentId = $fcn( $item->getId(), $item->getCode(), $email, $item->getPassword(), $item->getStatus() );
-		$item->setId( $contentId );
+
+		if( $item->getId() !== null )
+		{
+			$struct = $service->newUserUpdateStruct();
+			$struct->password = $item->getPassword();
+			$struct->enabled = $item->getStatus();
+			$struct->email = $email;
+
+			$user = $service->loadUser( $item->getId() );
+			$service->updateUser( $user, $struct );
+		}
+		else
+		{
+			$struct = $service->newUserCreateStruct( $item->getCode(), $email, $item->getPassword(), 'eng-GB' );
+			$struct->enabled = $item->getStatus();
+
+			$user = $service->createUser( $struct, array() );
+			$item->setId( $user->getUserId() );
+		}
 
 		$dbm = $context->getDatabaseManager();
 		$dbname = $this->getResourceName();
@@ -373,8 +406,20 @@ class Ezpublish
 			$required = array( 'customer' );
 
 			$results = $this->searchItemsBase( $conn, $search, $cfgPathSearch, $cfgPathCount, $required, $total, $level );
-			while( ( $row = $results->fetch() ) !== false ) {
+
+			while( ( $row = $results->fetch() ) !== false )
+			{
 				$map[ $row['customer.id'] ] = $row;
+				$map[ $row['customer.id'] ]['groups'] = array();
+			}
+
+
+			$path = 'mshop/customer/manager/ezpublish/groups';
+			$stmt = $conn->create( $this->getGroupSql( array_keys( $map ), $path ) );
+			$results = $stmt->execute();
+
+			while( ( $row = $results->fetch() ) !== false ) {
+				$map[ $row['contentobject_id'] ]['groups'][] = $row['role_id'];
 			}
 
 			$dbm->release( $conn, $dbname );
@@ -386,19 +431,6 @@ class Ezpublish
 		}
 
 		return $this->buildItems( $map, $ref, 'customer' );
-	}
-
-
-	/**
-	 * Returns a new manager for customer extensions
-	 *
-	 * @param string $manager Name of the sub manager type in lower case
-	 * @param string|null $name Name of the implementation, will be from configuration (or Default) if null
-	 * @return mixed Manager for different extensions, e.g stock, tags, locations, etc.
-	 */
-	public function getSubManager( $manager, $name = null )
-	{
-		return $this->getSubManagerBase( 'customer', $manager, ( $name === null ? 'Ezpublish' : $name ) );
 	}
 
 
@@ -416,9 +448,31 @@ class Ezpublish
 			$this->addressManager = $this->getSubManager( 'address' );
 		}
 
-		$helper = $this->getPasswordHelper();
 		$address = $this->addressManager->createItem();
 
-		return new \Aimeos\MShop\Customer\Item\Ezpublish( $address, $values, $listItems, $refItems, null, $helper );
+		return new \Aimeos\MShop\Customer\Item\Ezpublish( $address, $values, $listItems, $refItems );
+	}
+
+
+	/**
+	 * Returns the SQL statement for retrieving the customer group IDs
+	 *
+	 * @param array $ids List of customer IDs
+	 * @param string $cfgpath Configuration path to the SQL statement
+	 * @return string SQL statement ready for execution
+	 */
+	protected function getGroupSql( array $ids, $cfgpath )
+	{
+		if( empty( $ids ) ) { return '1=1'; }
+
+		$search = $this->createSearch();
+		$search->setConditions( $search->compare( '==', 'id', $ids ) );
+
+		$types = array( 'id' => \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+		$translations = array( 'id' => '"contentobject_id"' );
+
+		$cond = $search->getConditionString( $types, $translations );
+
+		return str_replace( ':cond', $cond, $this->getSqlConfig( $cfgpath ) );
 	}
 }

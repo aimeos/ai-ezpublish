@@ -103,7 +103,7 @@ class Ezpublish
 			$this->getSubManager( $domain )->cleanup( $siteids );
 		}
 
-		$this->cleanupBase( $siteids, 'mshop/customer/manager/lists/type/ezpublish/delete' );
+		$this->cleanupBase( $siteids, $this->getConfigPath() . 'delete' );
 	}
 
 
@@ -117,7 +117,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/lists/type/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, array(), $withsub );
+		return $this->getSearchAttributesBase( $this->getSearchConfig(), $path, array(), $withsub );
 	}
 
 
