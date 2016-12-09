@@ -12,7 +12,7 @@ namespace Aimeos\MW\Setup\Task;
 /**
  * Adds the required address fields to ezuser table
  */
-class EzuserAddAddress extends \Aimeos\MW\Setup\Task\TablesCreateMShop
+class EzuserAddAddress extends \Aimeos\MW\Setup\Task\Base
 {
 	/**
 	 * Returns the list of task names which depends on this task.
@@ -22,6 +22,17 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\TablesCreateMShop
 	public function getPreDependencies()
 	{
 		return array( 'TablesCreateEzpublish' );
+	}
+
+
+	/**
+	 * Returns the list of task names which depends on this task.
+	 *
+	 * @return array List of task names
+	 */
+	public function getPostDependencies()
+	{
+		return array();
 	}
 
 
