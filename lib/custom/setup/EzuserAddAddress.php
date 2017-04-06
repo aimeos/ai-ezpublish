@@ -32,7 +32,7 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\Base
 	 */
 	public function getPostDependencies()
 	{
-		return array();
+		return [];
 	}
 
 
@@ -56,7 +56,7 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\Base
 		$this->addIndexes( $this->addColumns( $toSchema->getTable( 'ezuser' ) ) );
 		$sql = $fromSchema->getMigrateToSql( $toSchema, $dbal->getDatabasePlatform() );
 
-		if( $sql !== array() )
+		if( $sql !== [] )
 		{
 			$this->executeList( $sql, 'db-customer' );
 			$this->status( 'done' );
@@ -96,9 +96,9 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\Base
 			'website' => array( 'string', array( 'length' => 255 ) ),
 			'birthday' => array( 'date', array( 'notnull' => false ) ),
 			'vdate' => array( 'date', array( 'notnull' => false ) ),
-			'status' => array( 'smallint', array() ),
-			'mtime' => array( 'datetime', array() ),
-			'ctime' => array( 'datetime', array() ),
+			'status' => array( 'smallint', [] ),
+			'mtime' => array( 'datetime', [] ),
+			'ctime' => array( 'datetime', [] ),
 			'editor' => array( 'string', array( 'length' => 255 ) ),
 		);
 

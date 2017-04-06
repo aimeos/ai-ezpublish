@@ -98,7 +98,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/group/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, array(), $withsub );
+		return $this->getSearchAttributesBase( $this->searchConfig, $path, [], $withsub );
 	}
 
 
@@ -136,9 +136,9 @@ class Ezpublish
 	 * @return array List of items implementing \Aimeos\MShop\Customer\Item\Group\Iface
 	 * @throws \Aimeos\MShop\Exception If retrieving items failed
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = array(), &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], &$total = null )
 	{
-		$map = array();
+		$map = [];
 		$context = $this->getContext();
 
 		$dbm = $context->getDatabaseManager();

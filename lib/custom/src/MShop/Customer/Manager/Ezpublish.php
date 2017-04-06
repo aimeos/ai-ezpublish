@@ -330,7 +330,7 @@ class Ezpublish
 			$struct = $service->newUserCreateStruct( $item->getCode(), $email, $item->getPassword(), 'eng-GB' );
 			$struct->enabled = $item->getStatus();
 
-			$user = $service->createUser( $struct, array() );
+			$user = $service->createUser( $struct, [] );
 			$item->setId( $user->getUserId() );
 		}
 
@@ -391,12 +391,12 @@ class Ezpublish
 	 * @return array List of items implementing \Aimeos\MShop\Customer\Item\Iface
 	 * @throws \Aimeos\MShop\Customer\Exception If creating items failed
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = array(), &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], &$total = null )
 	{
 		$dbm = $this->getContext()->getDatabaseManager();
 		$dbname = $this->getResourceName();
 		$conn = $dbm->acquire( $dbname );
-		$map = array();
+		$map = [];
 
 		try
 		{
@@ -410,7 +410,7 @@ class Ezpublish
 			while( ( $row = $results->fetch() ) !== false )
 			{
 				$map[ $row['customer.id'] ] = $row;
-				$map[ $row['customer.id'] ]['groups'] = array();
+				$map[ $row['customer.id'] ]['groups'] = [];
 			}
 
 
@@ -442,7 +442,7 @@ class Ezpublish
 	 * @param array $refItems Items referenced by the customer item via the list items
 	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item
 	 */
-	protected function createItemBase( array $values = array(), array $listItems = array(), array $refItems = array() )
+	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [] )
 	{
 		if( !isset( $this->addressManager ) ) {
 			$this->addressManager = $this->getSubManager( 'address' );
