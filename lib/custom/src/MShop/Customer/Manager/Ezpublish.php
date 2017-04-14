@@ -232,7 +232,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/submanagers';
 		foreach( $this->getContext()->getConfig()->get( $path, array( 'address', 'lists' ) ) as $domain ) {
-			$this->getSubManager( $domain )->cleanup( $siteids );
+			$this->getObject()->getSubManager( $domain )->cleanup( $siteids );
 		}
 	}
 
@@ -445,7 +445,7 @@ class Ezpublish
 	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [] )
 	{
 		if( !isset( $this->addressManager ) ) {
-			$this->addressManager = $this->getSubManager( 'address' );
+			$this->addressManager = $this->getObject()->getSubManager( 'address' );
 		}
 
 		$address = $this->addressManager->createItem();
@@ -465,7 +465,7 @@ class Ezpublish
 	{
 		if( empty( $ids ) ) { return '1=1'; }
 
-		$search = $this->createSearch();
+		$search = $this->getObject()->createSearch();
 		$search->setConditions( $search->compare( '==', 'id', $ids ) );
 
 		$types = array( 'id' => \Aimeos\MW\DB\Statement\Base::PARAM_INT );

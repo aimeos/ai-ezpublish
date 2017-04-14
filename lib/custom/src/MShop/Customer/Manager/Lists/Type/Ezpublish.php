@@ -100,7 +100,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/lists/type/submanagers';
 		foreach( $this->getContext()->getConfig()->get( $path, [] ) as $domain ) {
-			$this->getSubManager( $domain )->cleanup( $siteids );
+			$this->getObject()->getSubManager( $domain )->cleanup( $siteids );
 		}
 
 		$this->cleanupBase( $siteids, $this->getConfigPath() . 'delete' );
