@@ -9,7 +9,7 @@
 namespace Aimeos\MShop\Context\Item;
 
 
-class EzpublishTest extends \PHPUnit_Framework_TestCase
+class EzpublishTest extends \PHPUnit\Framework\TestCase
 {
 	private $object;
 

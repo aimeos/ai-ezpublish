@@ -9,7 +9,7 @@
 namespace Aimeos\MShop\Customer\Manager\Group;
 
 
-class EzpublishTest extends \PHPUnit_Framework_TestCase
+class EzpublishTest extends \PHPUnit\Framework\TestCase
 {
 	private $context;
 	private $object;
