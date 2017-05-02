@@ -33,7 +33,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetEzUserService()
 	{
-		$this->expectException( '\\Aimeos\\MShop\\Exception' );
+		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getEzUserService();
 	}
 

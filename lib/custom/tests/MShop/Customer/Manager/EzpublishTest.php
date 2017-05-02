@@ -76,14 +76,14 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$this->assertInstanceOf( '\Aimeos\MShop\Common\Manager\Iface', $this->object->getSubManager( 'address' ) );
 		$this->assertInstanceOf( '\Aimeos\MShop\Common\Manager\Iface', $this->object->getSubManager( 'address', 'Standard' ) );
 
-		$this->expectException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( '\Aimeos\MShop\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
 
 
 	public function testGetSubManagerInvalidName()
 	{
-		$this->expectException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( '\Aimeos\MShop\Exception' );
 		$this->object->getSubManager( 'address', 'unknown' );
 	}
 
@@ -147,7 +147,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testSaveItemInvalidItem()
 	{
-		$this->expectException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( '\Aimeos\MShop\Exception' );
 		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Lists\Standard( 'common.lists.' ) );
 	}
 
@@ -166,7 +166,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 		$object = new \Aimeos\MShop\Customer\Manager\Ezpublish( $context );
 
-		$this->expectException( '\Aimeos\MShop\Customer\Exception' );
+		$this->setExpectedException( '\Aimeos\MShop\Customer\Exception' );
 		$object->saveItem( new \Aimeos\MShop\Customer\Item\Standard( $this->address ) );
 	}
 
@@ -217,7 +217,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$object->expects( $this->once() )->method( 'searchItemsBase' )
 			->will( $this->throwException( new \Aimeos\MShop\Exception() ) );
 
-		$this->expectException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( '\Aimeos\MShop\Exception' );
 		$object->searchItems( $object->createSearch() );
 	}
 }
