@@ -49,14 +49,14 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$this->assertInstanceOf( '\\Aimeos\\MShop\\Common\\Manager\\Iface', $this->object->getSubManager('type') );
 		$this->assertInstanceOf( '\\Aimeos\\MShop\\Common\\Manager\\Iface', $this->object->getSubManager('type', 'Standard') );
 
-		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
+		$this->expectException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
 
 
 	public function testSaveItemInvalidItem()
 	{
-		$this->setExpectedException( '\Aimeos\MShop\Exception' );
+		$this->expectException( '\Aimeos\MShop\Exception' );
 		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Type\Standard( 'common.lists.type.' ) );
 	}
 
@@ -66,7 +66,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$item = $this->object->createItem();
 		$item->setDomain( 'customer/group' );
 
-		$this->setExpectedException( '\Aimeos\MShop\Customer\Exception' );
+		$this->expectException( '\Aimeos\MShop\Customer\Exception' );
 		$this->object->saveItem( $item );
 	}
 }

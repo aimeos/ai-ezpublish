@@ -38,7 +38,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testDeleteItems()
 	{
-		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
+		$this->expectException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->deleteItems( array( -1 ) );
 	}
 
@@ -56,14 +56,14 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetSubManager()
 	{
-		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
+		$this->expectException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
 
 
 	public function testSaveItem()
 	{
-		$this->setExpectedException( '\\Aimeos\\MShop\\Customer\\Exception' );
+		$this->expectException( '\\Aimeos\\MShop\\Customer\\Exception' );
 		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Lists\Standard( 'common.lists.' ) );
 	}
 
@@ -102,7 +102,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$mock->expects( $this->once() )->method( 'searchItemsBase' )
 			->will( $this->throwException( new \Aimeos\MShop\Exception() ) );
 
-		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
+		$this->expectException( '\\Aimeos\\MShop\\Exception' );
 		$mock->searchItems( $mock->createSearch() );
 	}
 }
