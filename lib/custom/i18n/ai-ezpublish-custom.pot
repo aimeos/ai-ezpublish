@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-03 12:08+0100\n"
+"POT-Creation-Date: 2017-06-28 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,8 +27,8 @@ msgstr ""
 msgid "Deleting groups is not supported, please use the eZ Publish backend"
 msgstr ""
 
-#: src/MShop/Customer/Manager/Ezpublish.php:303
-#: src/MShop/Customer/Manager/Ezpublish.php:312
+#: src/MShop/Customer/Manager/Ezpublish.php:304
+#: src/MShop/Customer/Manager/Ezpublish.php:315
 #: src/MShop/Customer/Manager/Lists/Ezpublish.php:184
 #, php-format
 msgid "Object is not of required type \"%1$s\""
