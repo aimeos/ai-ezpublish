@@ -4,7 +4,7 @@
 	"keywords": ["aimeos", "extension", "ezpublish", "ezplatform", "adapter"],
 	"homepage": "https://aimeos.org/eZPublish",
 	"type": "aimeos-extension",
-	"license": "LGPL-3.0",
+	"license": "LGPL-3.0-or-later",
 	"support": {
 		"source": "https://github.com/aimeos/ai-ezpublish",
 		"issues": "https://github.com/aimeos/ai-ezpublish/issues",
