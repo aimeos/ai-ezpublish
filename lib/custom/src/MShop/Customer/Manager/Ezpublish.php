@@ -231,7 +231,7 @@ class Ezpublish
 	public function cleanup( array $siteids )
 	{
 		$path = 'mshop/customer/manager/submanagers';
-		foreach( $this->getContext()->getConfig()->get( $path, array( 'address', 'lists' ) ) as $domain ) {
+		foreach( $this->getContext()->getConfig()->get( $path, ['address', 'group', 'lists', 'property'] ) as $domain ) {
 			$this->getObject()->getSubManager( $domain )->cleanup( $siteids );
 		}
 	}
@@ -273,7 +273,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, array( 'address', 'lists' ), $withsub );
+		return $this->getSearchAttributesBase( $this->searchConfig, $path, ['address', 'group', 'lists', 'property'], $withsub );
 	}
 
 
@@ -304,8 +304,11 @@ class Ezpublish
 			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Object is not of required type "%1$s"', $iface ) );
 		}
 
-		if( !$item->isModified() ) {
-			return $item;
+		if( !$item->isModified() )
+		{
+			$item = $this->savePropertyItems( $item, 'customer' );
+			$item = $this->saveAddressItems( $item, 'customer' );
+			return $this->saveListItems( $item, 'customer' );
 		}
 
 		$context = $this->getContext();
@@ -384,7 +387,9 @@ class Ezpublish
 			throw $e;
 		}
 
-		return $item;
+		$item = $this->savePropertyItems( $item, 'customer' );
+		$item = $this->saveAddressItems( $item, 'customer' );
+		return $this->saveListItems( $item, 'customer' );
 	}
 
 
@@ -448,7 +453,7 @@ class Ezpublish
 	 * @param array $addresses List of address items of the customer item
 	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item
 	 */
-	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [], array $addresses = [] )
+	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [], array $addresses = [], array $propItems = [] )
 	{
 		if( !isset( $this->addressManager ) ) {
 			$this->addressManager = $this->getObject()->getSubManager( 'address' );
@@ -456,7 +461,7 @@ class Ezpublish
 
 		$address = $this->addressManager->createItem();
 
-		return new \Aimeos\MShop\Customer\Item\Ezpublish( $address, $values, $listItems, $refItems, $addresses );
+		return new \Aimeos\MShop\Customer\Item\Ezpublish( $address, $values, $listItems, $refItems, $addresses, $propItems );
 	}
 
 

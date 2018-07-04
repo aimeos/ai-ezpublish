@@ -127,5 +127,59 @@ return array(
 
 			return $schema;
 		},
+
+		'ezuser_property_type' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+
+			$table = $schema->createTable( 'ezuser_property_type' );
+
+			$table->addColumn( 'id', 'integer', array( 'autoincrement' => true ) );
+			$table->addColumn( 'siteid', 'integer', [] );
+			$table->addColumn( 'domain', 'string', array( 'length' => 32 ) );
+			$table->addColumn( 'code', 'string', array( 'length' => 32 ) );
+			$table->addColumn( 'label', 'string', array( 'length' => 255 ) );
+			$table->addColumn( 'pos', 'integer', [] );
+			$table->addColumn( 'status', 'smallint', [] );
+			$table->addColumn( 'mtime', 'datetime', [] );
+			$table->addColumn( 'ctime', 'datetime', [] );
+			$table->addColumn( 'editor', 'string', array( 'length' => 255 ) );
+
+			$table->setPrimaryKey( array( 'id' ), 'pk_ezpprty_id' );
+			$table->addUniqueIndex( array( 'siteid', 'domain', 'code' ), 'unq_ezpprty_sid_dom_code' );
+			$table->addIndex( array( 'siteid', 'status', 'pos' ), 'idx_ezpprty_sid_status_pos' );
+			$table->addIndex( array( 'siteid', 'label' ), 'idx_ezpprty_sid_label' );
+			$table->addIndex( array( 'siteid', 'code' ), 'idx_ezpprty_sid_code' );
+
+			return $schema;
+		},
+
+		'ezuser_property' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+
+			$table = $schema->createTable( 'ezuser_property' );
+
+			$table->addColumn( 'id', 'integer', array( 'autoincrement' => true ) );
+			$table->addColumn( 'siteid', 'integer', [] );
+			$table->addColumn( 'parentid', 'integer', [] );
+			$table->addColumn( 'typeid', 'integer', [] );
+			$table->addColumn( 'langid', 'string', array( 'length' => 5, 'notnull' => false ) );
+			$table->addColumn( 'value', 'string', array( 'length' => 255 ) );
+			$table->addColumn( 'mtime', 'datetime', [] );
+			$table->addColumn( 'ctime', 'datetime', [] );
+			$table->addColumn( 'editor', 'string', array( 'length' => 255 ) );
+
+			$table->setPrimaryKey( array( 'id' ), 'pk_ezppr_id' );
+			$table->addUniqueIndex( array( 'parentid', 'siteid', 'typeid', 'langid', 'value' ), 'unq_ezppr_sid_tid_lid_value' );
+			$table->addIndex( array( 'siteid', 'langid' ), 'idx_ezppr_sid_langid' );
+			$table->addIndex( array( 'siteid', 'value' ), 'idx_ezppr_sid_value' );
+			$table->addIndex( array( 'typeid' ), 'fk_ezppr_typeid' );
+			$table->addIndex( array( 'parentid' ), 'fk_ezppr_pid' );
+
+			$table->addForeignKeyConstraint( 'ezuser', array( 'parentid' ), array( 'contentobject_id' ),
+				array( 'onUpdate' => 'CASCADE', 'onDelete' => 'CASCADE' ), 'fk_ezppr_pid' );
+
+			$table->addForeignKeyConstraint( 'ezuser_property_type', array( 'typeid' ), array( 'id' ),
+				array( 'onUpdate' => 'CASCADE', 'onDelete' => 'CASCADE' ), 'fk_ezppr_typeid' );
+
+			return $schema;
+		},
 	),
 );
