@@ -464,7 +464,7 @@ class Ezpublish
 
 		return new \Aimeos\MShop\Customer\Item\Ezpublish(
 			$address, $values, $listItems, $refItems,
-			null, $helper, $addresses, $propItems
+			null, null, $addresses, $propItems
 		);
 	}
 
