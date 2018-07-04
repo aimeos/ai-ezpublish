@@ -453,7 +453,8 @@ class Ezpublish
 	 * @param array $addresses List of address items of the customer item
 	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item
 	 */
-	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [], array $addresses = [], array $propItems = [] )
+	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [],
+		array $addresses = [], array $propItems = [] )
 	{
 		if( !isset( $this->addressManager ) ) {
 			$this->addressManager = $this->getObject()->getSubManager( 'address' );
@@ -461,7 +462,10 @@ class Ezpublish
 
 		$address = $this->addressManager->createItem();
 
-		return new \Aimeos\MShop\Customer\Item\Ezpublish( $address, $values, $listItems, $refItems, $addresses, $propItems );
+		return new \Aimeos\MShop\Customer\Item\Ezpublish(
+			$address, $values, $listItems, $refItems,
+			null, $helper, $addresses, $propItems
+		);
 	}
 
 
