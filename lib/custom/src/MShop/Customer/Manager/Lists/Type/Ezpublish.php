@@ -108,10 +108,10 @@ class Ezpublish
 
 
 	/**
-	 * Returns the list attributes that can be used for searching.
+	 * Returns the attributes that can be used for searching.
 	 *
 	 * @param boolean $withsub Return also attributes of sub-managers if true
-	 * @return array List of attribute items implementing \Aimeos\MW\Criteria\Attribute\Iface
+	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
 	public function getSearchAttributes( $withsub = true )
 	{

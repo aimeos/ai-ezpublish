@@ -215,25 +215,16 @@ class Ezpublish
 		foreach( $this->getContext()->getConfig()->get( $path, [] ) as $domain ) {
 			$this->getObject()->getSubManager( $domain )->cleanup( $siteids );
 		}
+
+		$this->cleanupBase( $siteids, 'mshop/customer/manager/lists/ezpublish/delete' );
 	}
 
 
 	/**
-	 * Removes multiple items specified by ids in the array.
-	 *
-	 * @param array $ids List of IDs
-	 */
-	public function deleteItems( array $ids )
-	{
-		$this->deleteItemsBase( $ids, $this->getConfigPath() . 'delete', false );
-	}
-
-
-	/**
-	 * Returns the list attributes that can be used for searching.
+	 * Returns the attributes that can be used for searching.
 	 *
 	 * @param boolean $withsub Return also attributes of sub-managers if true
-	 * @return array List of attribute items implementing \Aimeos\MW\Criteria\Attribute\Iface
+	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
 	public function getSearchAttributes( $withsub = true )
 	{
