@@ -238,17 +238,6 @@ class Ezpublish
 
 
 	/**
-	 * Instantiates a new customer item object.
-	 *
-	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item object
-	 */
-	public function createItem()
-	{
-		return $this->createItemBase();
-	}
-
-
-	/**
 	 * Removes multiple items specified by ids in the array.
 	 *
 	 * @param array $ids List of IDs
