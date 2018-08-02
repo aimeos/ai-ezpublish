@@ -147,7 +147,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testSaveItemInvalidItem()
 	{
-		$this->setExpectedException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( '\Aimeos\MW\Common\Exception' );
 		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Lists\Standard( 'common.lists.' ) );
 	}
 
