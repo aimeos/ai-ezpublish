@@ -179,10 +179,7 @@ class Ezpublish
 	 */
 	public function saveItem( \Aimeos\MShop\Common\Item\Iface $item, $fetch = true )
 	{
-		$iface = '\\Aimeos\\MShop\\Common\\Item\\Lists\\Iface';
-		if( !( $item instanceof $iface ) ) {
-			throw new \Aimeos\MShop\Exception( sprintf( 'Object is not of required type "%1$s"', $iface ) );
-		}
+		self::checkClass( '\\Aimeos\\MShop\\Common\\Item\\Lists\\Iface', $item );
 
 		if( $item->getDomain() === 'customer/group' ) {
 			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Adding groups to customers is not supported, please use the eZ Publish backend' ) );
