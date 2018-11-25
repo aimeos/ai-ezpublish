@@ -472,7 +472,7 @@ class Ezpublish
 		$types = array( 'id' => \Aimeos\MW\DB\Statement\Base::PARAM_INT );
 		$translations = array( 'id' => '"contentobject_id"' );
 
-		$cond = $search->getConditionString( $types, $translations );
+		$cond = $search->getConditionSource( $types, $translations );
 
 		return str_replace( ':cond', $cond, $this->getSqlConfig( $cfgpath ) );
 	}
