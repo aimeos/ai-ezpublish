@@ -22,10 +22,10 @@ return array(
 							"parentid", "company", "vatid", "salutation", "title",
 							"firstname", "lastname", "address1", "address2", "address3",
 							"postal", "city", "state", "countryid", "langid", "telephone",
-							"email", "telefax", "website", "longitude", "latitude", "flag",
+							"email", "telefax", "website", "longitude", "latitude",
 							"pos", "mtime", "editor", "siteid", "ctime"
 						) VALUES (
-							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 						)
 					',
 				),
@@ -37,7 +37,7 @@ return array(
 							"address2" = ?, "address3" = ?, "postal" = ?, "city" = ?,
 							"state" = ?, "countryid" = ?, "langid" = ?, "telephone" = ?,
 							"email" = ?, "telefax" = ?, "website" = ?, "longitude" = ?, "latitude" = ?,
-							"flag" = ?, "pos" = ?, "mtime" = ?, "editor" = ?, "siteid" = ?
+							"pos" = ?, "mtime" = ?, "editor" = ?, "siteid" = ?
 						WHERE "id" = ?
 					',
 				),
@@ -54,9 +54,9 @@ return array(
 							ezpad."telephone" AS "customer.address.telephone", ezpad."email" AS "customer.address.email",
 							ezpad."telefax" AS "customer.address.telefax", ezpad."website" AS "customer.address.website",
 							ezpad."longitude" AS "customer.address.longitude", ezpad."latitude" AS "customer.address.latitude",
-							ezpad."flag" AS "customer.address.flag", ezpad."pos" AS "customer.address.position",
-							ezpad."mtime" AS "customer.address.mtime", ezpad."editor" AS "customer.address.editor",
-							ezpad."ctime" AS "customer.address.ctime", ezpad."siteid" AS "customer.address.siteid"
+							ezpad."pos" AS "customer.address.position", ezpad."mtime" AS "customer.address.mtime",
+							ezpad."editor" AS "customer.address.editor", ezpad."ctime" AS "customer.address.ctime",
+							ezpad."siteid" AS "customer.address.siteid"
 						FROM "ezuser_address" AS ezpad
 						:joins
 						WHERE :cond
@@ -65,7 +65,7 @@ return array(
 							ezpad."address1", ezpad."address2", ezpad."address3", ezpad."postal",
 							ezpad."city", ezpad."state", ezpad."countryid", ezpad."langid",
 							ezpad."telephone", ezpad."email", ezpad."telefax", ezpad."website",
-							ezpad."longitude", ezpad."latitude", ezpad."flag", ezpad."pos",
+							ezpad."longitude", ezpad."latitude", ezpad."pos",
 							ezpad."mtime", ezpad."editor", ezpad."ctime"
 						/*-orderby*/ ORDER BY :order /*orderby-*/
 						LIMIT :size OFFSET :start

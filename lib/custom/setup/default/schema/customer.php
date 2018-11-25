@@ -50,7 +50,6 @@ return array(
 			$table->addColumn( 'email', 'string', array( 'length' => 255 ) );
 			$table->addColumn( 'telefax', 'string', array( 'length' => 255 ) );
 			$table->addColumn( 'website', 'string', array( 'length' => 255 ) );
-			$table->addColumn( 'flag', 'integer', [] );
 			$table->addColumn( 'pos', 'smallint', [] );
 			$table->addColumn( 'mtime', 'datetime', [] );
 			$table->addColumn( 'ctime', 'datetime', [] );

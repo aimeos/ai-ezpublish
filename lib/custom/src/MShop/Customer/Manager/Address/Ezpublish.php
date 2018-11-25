@@ -166,13 +166,6 @@ class Ezpublish
 			'type' => 'string',
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_STR,
 		),
-		'customer.address.flag' => array(
-			'label' => 'Customer address flag',
-			'code' => 'customer.address.flag',
-			'internalcode' => 'ezuad."flag"',
-			'type' => 'integer',
-			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,
-		),
 		'customer.address.position' => array(
 			'label' => 'Customer address position',
 			'code' => 'customer.address.position',
