@@ -220,8 +220,6 @@ class Ezpublish
 		),
 	);
 
-	private $addressManager;
-
 
 	/**
 	 * Removes old entries from the storage.
@@ -442,11 +440,7 @@ class Ezpublish
 	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [],
 		array $addresses = [], array $propItems = [] )
 	{
-		if( !isset( $this->addressManager ) ) {
-			$this->addressManager = $this->getObject()->getSubManager( 'address' );
-		}
-
-		$address = $this->addressManager->createItem();
+		$address = new \Aimeos\MShop\Common\Item\Address\Simple( 'customer.', $values );
 
 		return new \Aimeos\MShop\Customer\Item\Ezpublish(
 			$address, $values, $listItems, $refItems,
