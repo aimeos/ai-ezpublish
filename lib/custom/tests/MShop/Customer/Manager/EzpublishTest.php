@@ -66,24 +66,24 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$this->assertGreaterThan( 0, count( $attributes ) );
 
 		foreach( $attributes as $attribute ) {
-			$this->assertInstanceOf( '\Aimeos\MW\Criteria\Attribute\Iface', $attribute );
+			$this->assertInstanceOf( \Aimeos\MW\Criteria\Attribute\Iface::class, $attribute );
 		}
 	}
 
 
 	public function testGetSubManager()
 	{
-		$this->assertInstanceOf( '\Aimeos\MShop\Common\Manager\Iface', $this->object->getSubManager( 'address' ) );
-		$this->assertInstanceOf( '\Aimeos\MShop\Common\Manager\Iface', $this->object->getSubManager( 'address', 'Standard' ) );
+		$this->assertInstanceOf( \Aimeos\MShop\Common\Manager\Iface::class, $this->object->getSubManager( 'address' ) );
+		$this->assertInstanceOf( \Aimeos\MShop\Common\Manager\Iface::class, $this->object->getSubManager( 'address', 'Standard' ) );
 
-		$this->setExpectedException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( \Aimeos\MShop\Exception::class );
 		$this->object->getSubManager( 'unknown' );
 	}
 
 
 	public function testGetSubManagerInvalidName()
 	{
-		$this->setExpectedException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( \Aimeos\MShop\Exception::class );
 		$this->object->getSubManager( 'address', 'unknown' );
 	}
 
@@ -92,7 +92,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	{
 		$service = $this->getMockBuilder( 'eZ\Publish\API\Repository\UserService' )->getMock();
 		$struct = $this->getMockBuilder( 'eZ\Publish\API\Repository\Values\User\UserCreateStruct' )->getMock();
-		$user = $this->getMockBuilder( '\eZ\Publish\API\Repository\Values\User\User' )
+		$user = $this->getMockBuilder( \eZ\Publish\API\Repository\Values\User\User::class )
 			->setMethods( array( 'getUserId', 'getVersionInfo', 'getFieldValue', 'getFields', 'getFieldsByLanguage' ) )
 			->getMock();
 
@@ -147,7 +147,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testSaveItemInvalidItem()
 	{
-		$this->setExpectedException( '\Aimeos\MW\Common\Exception' );
+		$this->setExpectedException( \Aimeos\MW\Common\Exception::class );
 		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Lists\Standard( 'common.lists.' ) );
 	}
 
@@ -166,19 +166,19 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 		$object = new \Aimeos\MShop\Customer\Manager\Ezpublish( $context );
 
-		$this->setExpectedException( '\Aimeos\MShop\Customer\Exception' );
+		$this->setExpectedException( \Aimeos\MShop\Customer\Exception::class );
 		$object->saveItem( new \Aimeos\MShop\Customer\Item\Standard( $this->address ) );
 	}
 
 
 	public function testSearchItems()
 	{
-		$mock = $this->getMockBuilder( '\Aimeos\MShop\Customer\Manager\Ezpublish' )
+		$mock = $this->getMockBuilder( \Aimeos\MShop\Customer\Manager\Ezpublish::class )
 			->setConstructorArgs( array( $this->context ) )
 			->setMethods( array( 'searchItemsBase' ) )
 			->getMock();
 
-		$result1 = $this->getMockBuilder( '\Aimeos\MW\DB\Result\Iface' )->getMock();
+		$result1 = $this->getMockBuilder( \Aimeos\MW\DB\Result\Iface::class )->getMock();
 
 		$mock->expects( $this->once() )->method( 'searchItemsBase' )->will( $this->returnValue( $result1 ) );
 		$result1->expects( $this->exactly( 2 ) )->method( 'fetch' )
@@ -188,7 +188,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$dbm = $this->getMockBuilder( 'Aimeos\MW\DB\Manager\Iface' )->getMock();
 		$conn = $this->getMockBuilder( 'Aimeos\MW\DB\Connection\Iface' )->getMock();
 		$stmt = $this->getMockBuilder( 'Aimeos\MW\DB\Statement\Iface' )->getMock();
-		$result2 = $this->getMockBuilder( '\Aimeos\MW\DB\Result\Iface' )->getMock();
+		$result2 = $this->getMockBuilder( \Aimeos\MW\DB\Result\Iface::class )->getMock();
 
 		$dbm->expects( $this->any() )->method( 'acquire' )->will( $this->returnValue( $conn ) );
 		$conn->expects( $this->once() )->method( 'create' )->will( $this->returnValue( $stmt ) );
@@ -203,13 +203,13 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$list = $mock->searchItems( $mock->createSearch() );
 
 		$this->assertEquals( 1, count( $list ) );
-		$this->assertInstanceOf( '\Aimeos\MShop\Customer\Item\Iface', $list[-1] );
+		$this->assertInstanceOf( \Aimeos\MShop\Customer\Item\Iface::class, $list[-1] );
 	}
 
 
 	public function testSearchItemsException()
 	{
-		$object = $this->getMockBuilder( '\Aimeos\MShop\Customer\Manager\Ezpublish' )
+		$object = $this->getMockBuilder( \Aimeos\MShop\Customer\Manager\Ezpublish::class )
 			->setConstructorArgs( array( $this->context ) )
 			->setMethods( array( 'searchItemsBase' ) )
 			->getMock();
@@ -217,7 +217,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$object->expects( $this->once() )->method( 'searchItemsBase' )
 			->will( $this->throwException( new \Aimeos\MShop\Exception() ) );
 
-		$this->setExpectedException( '\Aimeos\MShop\Exception' );
+		$this->setExpectedException( \Aimeos\MShop\Exception::class );
 		$object->searchItems( $object->createSearch() );
 	}
 }

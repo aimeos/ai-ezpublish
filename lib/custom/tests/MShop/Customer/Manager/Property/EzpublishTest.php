@@ -39,7 +39,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$this->assertGreaterThan( 0, count( $attributes ) );
 
 		foreach( $attributes as $attribute ) {
-			$this->assertInstanceOf( '\Aimeos\MW\Criteria\Attribute\Iface', $attribute );
+			$this->assertInstanceOf( \Aimeos\MW\Criteria\Attribute\Iface::class, $attribute );
 		}
 	}
 
@@ -56,7 +56,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testSaveItemInvalidItem()
 	{
-		$this->setExpectedException( '\Aimeos\MW\Common\Exception' );
+		$this->setExpectedException( \Aimeos\MW\Common\Exception::class );
 		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Type\Standard( 'common.property.type.' ) );
 	}
 }

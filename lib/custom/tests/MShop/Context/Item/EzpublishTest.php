@@ -43,6 +43,6 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$return = $this->object->setEzUserService( $this->mock );
 
 		$this->assertSame( $this->mock, $this->object->getEzUserService() );
-		$this->assertInstanceOf( '\Aimeos\MShop\Context\Item\Iface', $return );
+		$this->assertInstanceOf( \Aimeos\MShop\Context\Item\Iface::class, $return );
 	}
 }

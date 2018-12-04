@@ -70,12 +70,12 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testSearchItems()
 	{
-		$mock = $this->getMockBuilder( '\Aimeos\MShop\Customer\Manager\Group\Ezpublish' )
+		$mock = $this->getMockBuilder( \Aimeos\MShop\Customer\Manager\Group\Ezpublish::class )
 			->setConstructorArgs( array( \TestHelper::getContext() ) )
 			->setMethods( array( 'searchItemsBase' ) )
 			->getMock();
 
-		$result = $this->getMockBuilder( '\Aimeos\MW\DB\Result\Iface' )
+		$result = $this->getMockBuilder( \Aimeos\MW\DB\Result\Iface::class )
 			->setMethods( array( 'affectedRows', 'fetch', 'finish', 'nextResult' ) )
 			->getMock();
 
@@ -88,13 +88,13 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$result = $mock->searchItems( $mock->createSearch() );
 
 		$this->assertEquals( 1, count( $result ) );
-		$this->assertInstanceOf( '\Aimeos\MShop\Customer\Item\Group\Iface', $result[1] );
+		$this->assertInstanceOf( \Aimeos\MShop\Customer\Item\Group\Iface::class, $result[1] );
 	}
 
 
 	public function testSearchItemsException()
 	{
-		$mock = $this->getMockBuilder( '\Aimeos\MShop\Customer\Manager\Group\Ezpublish' )
+		$mock = $this->getMockBuilder( \Aimeos\MShop\Customer\Manager\Group\Ezpublish::class )
 			->setConstructorArgs( array( \TestHelper::getContext() ) )
 			->setMethods( array( 'searchItemsBase' ) )
 			->getMock();
