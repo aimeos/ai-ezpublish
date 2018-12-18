@@ -24,7 +24,6 @@ class Ezpublish
 		'customer.property.id' => array(
 			'code' => 'customer.property.id',
 			'internalcode' => 'ezppr."id"',
-			'internaldeps'=>array( 'LEFT JOIN "ezp_user_property" AS ezppr ON ( ezppr."parentid" = ezp."id" )' ),
 			'label' => 'Property ID',
 			'type' => 'integer',
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,
@@ -46,13 +45,12 @@ class Ezpublish
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,
 			'public' => false,
 		),
-		'customer.property.typeid' => array(
-			'code' => 'customer.property.typeid',
-			'internalcode' => 'ezppr."typeid"',
-			'label' => 'Property type ID',
-			'type' => 'integer',
-			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,
-			'public' => false,
+		'customer.property.type' => array(
+			'code' => 'customer.property.type',
+			'internalcode' => 'ezppr."type"',
+			'label' => 'Property type',
+			'type' => 'string',
+			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_STR,
 		),
 		'customer.property.value' => array(
 			'code' => 'customer.property.value',
@@ -121,7 +119,7 @@ class Ezpublish
 	{
 		$path = 'mshop/customer/manager/property/submanagers';
 
-		return $this->getSearchAttributesBase( $this->searchConfig, $path, ['type'], $withsub );
+		return $this->getSearchAttributesBase( $this->searchConfig, $path, [], $withsub );
 	}
 
 

@@ -24,7 +24,6 @@ class Ezpublish
 		'customer.property.type.id' => array(
 			'code' => 'customer.property.type.id',
 			'internalcode' => 'ezpprty."id"',
-			'internaldeps' => array( 'LEFT JOIN "ezp_user_property_type" AS ezpprty ON ( ezppr."typeid" = ezpprty."id" )' ),
 			'label' => 'Property type ID',
 			'type' => 'integer',
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,

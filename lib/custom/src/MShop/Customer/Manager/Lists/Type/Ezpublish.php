@@ -25,7 +25,6 @@ class Ezpublish
 		'customer.lists.type.id' => array(
 			'code'=>'customer.lists.type.id',
 			'internalcode'=>'ezulity."id"',
-			'internaldeps'=>array( 'LEFT JOIN "ezuser_list_type" AS ezulity ON ( ezuli."typeid" = ezulity."id" )' ),
 			'label'=>'Customer list type ID',
 			'type'=> 'integer',
 			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,

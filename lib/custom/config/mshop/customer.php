@@ -182,14 +182,14 @@ return array(
 						FROM "ezuser_list"
 						WHERE "siteid" = ?
 							AND "parentid" = ?
-							AND "typeid" = ?
+							AND "type" = ?
 							AND "domain" = ?
 					',
 				),
 				'insert' => array(
 					'ansi' => '
 						INSERT INTO "ezuser_list"(
-							"parentid", "typeid", "domain", "refid", "start", "end",
+							"parentid", "type", "domain", "refid", "start", "end",
 							"config", "pos", "status", "mtime", "editor", "siteid", "ctime"
 						) VALUES (
 							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
@@ -199,7 +199,7 @@ return array(
 				'update' => array(
 					'ansi' => '
 						UPDATE "ezuser_list"
-						SET "parentid"=?, "typeid" = ?, "domain" = ?, "refid" = ?, "start" = ?, "end" = ?,
+						SET "parentid"=?, "type" = ?, "domain" = ?, "refid" = ?, "start" = ?, "end" = ?,
 							"config" = ?, "pos" = ?, "status" = ?, "mtime" = ?, "editor" = ?
 						WHERE "siteid" = ? AND "id" = ?
 					',
@@ -223,7 +223,7 @@ return array(
 							SET "pos" = "pos" + ?, "mtime" = ?, "editor" = ?
 						WHERE "siteid" = ?
 							AND "parentid" = ?
-							AND "typeid" = ?
+							AND "type" = ?
 							AND "domain" = ?
 							AND "pos" >= ?
 					',
@@ -231,7 +231,7 @@ return array(
 				'search' => array(
 					'ansi' => '
 						SELECT ezpli."id" AS "customer.lists.id", ezpli."siteid" AS "customer.lists.siteid",
-							ezpli."parentid" AS "customer.lists.parentid", ezpli."typeid" AS "customer.lists.typeid",
+							ezpli."parentid" AS "customer.lists.parentid", ezpli."type" AS "customer.lists.type",
 							ezpli."domain" AS "customer.lists.domain", ezpli."refid" AS "customer.lists.refid",
 							ezpli."start" AS "customer.lists.datestart", ezpli."end" AS "customer.lists.dateend",
 							ezpli."config" AS "customer.lists.config", ezpli."pos" AS "customer.lists.position",
@@ -240,7 +240,7 @@ return array(
 						FROM "ezuser_list" AS ezpli
 						:joins
 						WHERE :cond
-						GROUP BY ezpli."id", ezpli."parentid", ezpli."siteid", ezpli."typeid",
+						GROUP BY ezpli."id", ezpli."parentid", ezpli."siteid", ezpli."type",
 							ezpli."domain", ezpli."refid", ezpli."start", ezpli."end",
 							ezpli."config", ezpli."pos", ezpli."status", ezpli."mtime",
 							ezpli."editor", ezpli."ctime" /*-columns*/ , :columns /*columns-*/
@@ -348,7 +348,7 @@ return array(
 				'insert' => array(
 					'ansi' => '
 						INSERT INTO "ezuser_property" (
-							"parentid", "typeid", "langid", "value",
+							"parentid", "type", "langid", "value",
 							"mtime", "editor", "siteid", "ctime"
 						) VALUES (
 							?, ?, ?, ?, ?, ?, ?, ?
@@ -358,7 +358,7 @@ return array(
 				'update' => array(
 					'ansi' => '
 						UPDATE "ezuser_property"
-						SET "parentid" = ?, "typeid" = ?, "langid" = ?,
+						SET "parentid" = ?, "type" = ?, "langid" = ?,
 							"value" = ?, "mtime" = ?, "editor" = ?
 						WHERE "siteid" = ? AND "id" = ?
 					'
@@ -366,14 +366,14 @@ return array(
 				'search' => array(
 					'ansi' => '
 						SELECT ezppr."id" AS "customer.property.id", ezppr."parentid" AS "customer.property.parentid",
-							ezppr."siteid" AS "customer.property.siteid", ezppr."typeid" AS "customer.property.typeid",
+							ezppr."siteid" AS "customer.property.siteid", ezppr."type" AS "customer.property.type",
 							ezppr."langid" AS "customer.property.languageid", ezppr."value" AS "customer.property.value",
 							ezppr."mtime" AS "customer.property.mtime", ezppr."editor" AS "customer.property.editor",
 							ezppr."ctime" AS "customer.property.ctime"
 						FROM "ezuser_property" AS ezppr
 						:joins
 						WHERE :cond
-						GROUP BY ezppr."id", ezppr."parentid", ezppr."siteid", ezppr."typeid",
+						GROUP BY ezppr."id", ezppr."parentid", ezppr."siteid", ezppr."type",
 							ezppr."langid", ezppr."value", ezppr."mtime", ezppr."editor",
 							ezppr."ctime" /*-columns*/ , :columns /*columns-*/
 						/*-orderby*/ ORDER BY :order /*orderby-*/
