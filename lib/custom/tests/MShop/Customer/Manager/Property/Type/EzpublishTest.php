@@ -16,7 +16,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	protected function setUp()
 	{
-		$manager = \Aimeos\MShop\Customer\Manager\Factory::createManager( \TestHelper::getContext(), 'Ezpublish' );
+		$manager = \Aimeos\MShop\Customer\Manager\Factory::create( \TestHelper::getContext(), 'Ezpublish' );
 
 		$listManager = $manager->getSubManager( 'property', 'Ezpublish' );
 		$this->object = $listManager->getSubManager( 'type', 'Ezpublish' );
