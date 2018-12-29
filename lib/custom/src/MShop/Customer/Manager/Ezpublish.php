@@ -432,19 +432,19 @@ class Ezpublish
 	 * Creates a new customer item.
 	 *
 	 * @param array $values List of attributes for customer item
-	 * @param array $listItems List items associated to the customer item
-	 * @param array $refItems Items referenced by the customer item via the list items
-	 * @param array $addresses List of address items of the customer item
+	 * @param \Aimeos\MShop\Common\Lists\Item\Iface[] $listItems List of list items
+	 * @param \Aimeos\MShop\Common\Item\Iface[] $refItems List of referenced items
+	 * @param \Aimeos\MShop\Common\Item\Address\Iface[] $addrItems List of referenced address items
+	 * @param \Aimeos\MShop\Common\Item\Property\Iface[] $propItems List of property items
 	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item
 	 */
 	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [],
-		array $addresses = [], array $propItems = [] )
+		array $addrItems = [], array $propItems = [] )
 	{
 		$address = new \Aimeos\MShop\Common\Item\Address\Simple( 'customer.', $values );
 
 		return new \Aimeos\MShop\Customer\Item\Ezpublish(
-			$address, $values, $listItems, $refItems,
-			null, null, $addresses, $propItems
+			$address, $values, $listItems, $refItems, $addrItems, $propItems
 		);
 	}
 
