@@ -43,18 +43,20 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\Base
 	{
 		$this->msg( 'Adding address fields to ezuser table', 0 );
 
-		$dbal = $this->getConnection( 'db-customer' )->getRawObject();
+		$conn = $this->acquire( 'db-customer' );
+		$dbal = $conn->getRawObject();
 
 		if( !( $dbal instanceof \Doctrine\DBAL\Connection ) ) {
 			throw new \Aimeos\MW\Setup\Exception( 'Not a DBAL connection' );
 		}
-
 
 		$fromSchema = $dbal->getSchemaManager()->createSchema();
 		$toSchema = clone $fromSchema;
 
 		$this->addIndexes( $this->addColumns( $toSchema->getTable( 'ezuser' ) ) );
 		$sql = $fromSchema->getMigrateToSql( $toSchema, $dbal->getDatabasePlatform() );
+
+		$this->release( $conn, 'db-customer' );
 
 		if( $sql !== [] )
 		{
