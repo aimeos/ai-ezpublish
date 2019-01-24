@@ -137,7 +137,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 
 		$item = new \Aimeos\MShop\Customer\Item\Standard( $this->address, array( 'customer.id' => 1 ) );
-		$item->setLastname( 'test' );
+		$item->setCode( 'test' );
 
 		$this->context->setDatabaseManager( $dbm );
 		$this->context->setEzUserService( $service );
