@@ -92,7 +92,7 @@ class EzuserAddAddress extends \Aimeos\MW\Setup\Task\Base
 			'city' => array( 'string', array( 'length' => 255 ) ),
 			'state' => array( 'string', array( 'length' => 255 ) ),
 			'langid' => array( 'string', array( 'length' => 5, 'notnull' => false ) ),
-			'countryid' => array( 'string', array( 'length' => 2, 'notnull' => false, 'fixed' => true ) ),
+			'countryid' => array( 'string', array( 'length' => 2, 'notnull' => false ) ),
 			'telephone' => array( 'string', array( 'length' => 32 ) ),
 			'telefax' => array( 'string', array( 'length' => 32 ) ),
 			'website' => array( 'string', array( 'length' => 255 ) ),
