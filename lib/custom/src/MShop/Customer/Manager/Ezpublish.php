@@ -218,7 +218,60 @@ class Ezpublish
 			'type'=> 'string',
 			'internaltype'=> \Aimeos\MW\DB\Statement\Base::PARAM_STR,
 		),
+		'customer:has' => array(
+			'code' => 'customer:has()',
+			'internalcode' => '(
+				SELECT ezuli_has."id" FROM ezuser_list AS ezuli_has
+				WHERE ezu."id" = ezuli_has."parentid" AND :site
+					AND ezuli_has."domain" = $1 AND ezuli_has."type" = $2 AND ezuli_has."refid" = $3
+			)',
+			'label' => 'Customer has list item, parameter(<domain>,<list type>,<reference ID>)',
+			'type' => 'null',
+			'internaltype' => 'null',
+			'public' => false,
+		),
+		'customer:prop' => array(
+			'code' => 'customer:prop()',
+			'internalcode' => '(
+				SELECT ezupr_prop."id" FROM ezuser_property AS ezupr_prop
+				WHERE ezu."id" = ezupr_prop."parentid" AND :site
+					AND ezupr_prop."type" = $1 AND ezupr_prop."value" = $3
+					AND ( ezupr_prop."langid" = $2 OR ezupr_prop."langid" IS NULL )
+			)',
+			'label' => 'Customer has property item, parameter(<property type>,<language code>,<property value>)',
+			'type' => 'null',
+			'internaltype' => 'null',
+			'public' => false,
+		),
 	);
+
+
+	/**
+	 * Initializes the object.
+	 *
+	 * @param \Aimeos\MShop\Context\Item\Iface $context Context object
+	 */
+	public function __construct( \Aimeos\MShop\Context\Item\Iface $context )
+	{
+		parent::__construct( $context );
+
+		$locale = $context->getLocale();
+		$level = \Aimeos\MShop\Locale\Manager\Base::SITE_ALL;
+		$level = $context->getConfig()->get( 'mshop/customer/manager/sitemode', $level );
+
+		$siteIds = [$locale->getSiteId()];
+
+		if( $level & \Aimeos\MShop\Locale\Manager\Base::SITE_PATH ) {
+			$siteIds = array_merge( $siteIds, $locale->getSitePath() );
+		}
+
+		if( $level & \Aimeos\MShop\Locale\Manager\Base::SITE_SUBTREE ) {
+			$siteIds = array_merge( $siteIds, $locale->getSiteSubTree() );
+		}
+
+		$this->replaceSiteMarker( $this->searchConfig['customer:has'], 'ezuli_has."siteid"', $siteIds, ':site' );
+		$this->replaceSiteMarker( $this->searchConfig['customer:prop'], 'ezupr_prop."siteid"', $siteIds, ':site' );
+	}
 
 
 	/**
