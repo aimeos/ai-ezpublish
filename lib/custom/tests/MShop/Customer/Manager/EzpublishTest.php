@@ -163,6 +163,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	{
 		$context = new \Aimeos\MShop\Context\Item\Standard();
 		$context->setConfig( $this->context->getConfig() );
+		$context->setLocale( $this->context->getLocale() );
 
 		$object = new \Aimeos\MShop\Customer\Manager\Ezpublish( $context );
 
