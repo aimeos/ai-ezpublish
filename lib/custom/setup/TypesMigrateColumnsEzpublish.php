@@ -31,17 +31,6 @@ class TypesMigrateColumnsEzpublish extends \Aimeos\MW\Setup\Task\TypesMigrateCol
 
 
 	/**
-	 * Returns the list of task names which this task depends on.
-	 *
-	 * @return string[] List of task names
-	 */
-	public function getPreDependencies()
-	{
-		return [];
-	}
-
-
-	/**
 	 * Returns the list of task names which depends on this task.
 	 *
 	 * @return array List of task names
