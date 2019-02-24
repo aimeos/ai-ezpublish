@@ -88,7 +88,7 @@ class TestHelper
 
 		$ctx->setLocale( $localeItem );
 
-		$ctx->setEditor( 'ai-ezpublish:unittest' );
+		$ctx->setEditor( 'ai-ezpublish:lib/custom' );
 
 		return $ctx;
 	}
