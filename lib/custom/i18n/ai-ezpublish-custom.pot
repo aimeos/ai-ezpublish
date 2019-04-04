@@ -3,21 +3,21 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: aimeos\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-27 08:31+0200\n"
+"POT-Creation-Date: 2019-04-02 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Aimeos <aimeos@aimeos.org>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/MShop/Customer/Manager/Lists/Ezpublish.php:185
+#: src/MShop/Customer/Manager/Lists/Ezpublish.php:184
 #, php-format
 msgid "Adding groups to customers is not supported, please use the eZ Publish backend"
 msgstr ""
@@ -27,7 +27,7 @@ msgstr ""
 msgid "Deleting groups is not supported, please use the eZ Publish backend"
 msgstr ""
 
-#: src/MShop/Customer/Manager/Ezpublish.php:304
+#: src/MShop/Customer/Manager/Ezpublish.php:375
 #, php-format
 msgid "Object is not of required type \"%1$s\""
 msgstr ""
