@@ -155,7 +155,7 @@ class Ezpublish
 			$results = $this->searchItemsBase( $conn, $search, $cfgPathSearch, $cfgPathCount, $required, $total, $level );
 
 			while( ( $row = $results->fetch() ) !== false ) {
-				$map[$row['customer.group.id']] = $this->createItemBase( $row );
+				$map[(string) $row['customer.group.id']] = $this->createItemBase( $row );
 			}
 
 			$dbm->release( $conn, $dbname );
