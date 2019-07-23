@@ -56,7 +56,7 @@ return array(
 							ezpad."longitude" AS "customer.address.longitude", ezpad."latitude" AS "customer.address.latitude",
 							ezpad."pos" AS "customer.address.position", ezpad."mtime" AS "customer.address.mtime",
 							ezpad."editor" AS "customer.address.editor", ezpad."ctime" AS "customer.address.ctime",
-							ezpad."siteid" AS "customer.address.siteid"
+							ezpad."siteid" AS "customer.address.siteid", ezpad.*
 						FROM "ezuser_address" AS ezpad
 						:joins
 						WHERE :cond
@@ -127,7 +127,8 @@ return array(
 								ezplity."code" AS "customer.lists.type.code", ezplity."domain" AS "customer.lists.type.domain",
 								ezplity."label" AS "customer.lists.type.label", ezplity."status" AS "customer.lists.type.status",
 								ezplity."mtime" AS "customer.lists.type.mtime", ezplity."editor" AS "customer.lists.type.editor",
-								ezplity."ctime" AS "customer.lists.type.ctime", ezplity."pos" AS "customer.lists.type.position"
+								ezplity."ctime" AS "customer.lists.type.ctime", ezplity."pos" AS "customer.lists.type.position",
+								ezplity.*
 							FROM "ezuser_list_type" AS ezplity
 							:joins
 							WHERE :cond
@@ -236,7 +237,8 @@ return array(
 							ezpli."start" AS "customer.lists.datestart", ezpli."end" AS "customer.lists.dateend",
 							ezpli."config" AS "customer.lists.config", ezpli."pos" AS "customer.lists.position",
 							ezpli."status" AS "customer.lists.status", ezpli."mtime" AS "customer.lists.mtime",
-							ezpli."editor" AS "customer.lists.editor", ezpli."ctime" AS "customer.lists.ctime"
+							ezpli."editor" AS "customer.lists.editor", ezpli."ctime" AS "customer.lists.ctime",
+							ezpli.*
 						FROM "ezuser_list" AS ezpli
 						:joins
 						WHERE :cond
@@ -304,7 +306,8 @@ return array(
 								ezpprty."code" AS "customer.property.type.code", ezpprty."domain" AS "customer.property.type.domain",
 								ezpprty."label" AS "customer.property.type.label", ezpprty."status" AS "customer.property.type.status",
 								ezpprty."mtime" AS "customer.property.type.mtime", ezpprty."editor" AS "customer.property.type.editor",
-								ezpprty."ctime" AS "customer.property.type.ctime", ezpprty."pos" AS "customer.property.type.position"
+								ezpprty."ctime" AS "customer.property.type.ctime", ezpprty."pos" AS "customer.property.type.position",
+								ezpprty.*
 							FROM "ezuser_property_type" ezpprty
 							:joins
 							WHERE :cond
@@ -369,7 +372,7 @@ return array(
 							ezppr."siteid" AS "customer.property.siteid", ezppr."type" AS "customer.property.type",
 							ezppr."langid" AS "customer.property.languageid", ezppr."value" AS "customer.property.value",
 							ezppr."mtime" AS "customer.property.mtime", ezppr."editor" AS "customer.property.editor",
-							ezppr."ctime" AS "customer.property.ctime"
+							ezppr."ctime" AS "customer.property.ctime", ezppr.*
 						FROM "ezuser_property" AS ezppr
 						:joins
 						WHERE :cond
@@ -454,7 +457,7 @@ return array(
 						ezp."birthday" AS "customer.birthday", ezp."enabled" AS "customer.status",
 						ezp."vdate" AS "customer.vdate", ezp."password" AS "customer.password",
 						ezp."ctime" AS "customer.ctime", ezp."mtime" AS "customer.mtime",
-						ezp."editor" AS "customer.editor", ezp."roles", ezp."salt"
+						ezp."editor" AS "customer.editor", ezp."roles", ezp."salt", ezp.*
 					FROM "ezuser" AS ezp
 					:joins
 					WHERE :cond
