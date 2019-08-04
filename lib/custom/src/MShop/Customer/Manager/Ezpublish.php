@@ -477,7 +477,7 @@ class Ezpublish
 			while( ( $row = $results->fetch() ) !== false )
 			{
 				$map[ $row['customer.id'] ] = $row;
-				$map[ $row['customer.id'] ]['groups'] = [];
+				$map[ $row['customer.id'] ]['customer.groups'] = [];
 			}
 
 
@@ -486,7 +486,7 @@ class Ezpublish
 			$results = $stmt->execute();
 
 			while( ( $row = $results->fetch() ) !== false ) {
-				$map[(string) $row['contentobject_id']]['groups'][] = $row['role_id'];
+				$map[(string) $row['contentobject_id']]['customer.groups'][] = $row['role_id'];
 			}
 
 			$dbm->release( $conn, $dbname );
