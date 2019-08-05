@@ -43,7 +43,7 @@ return array(
 				),
 				'search' => array(
 					'ansi' => '
-						SELECT ezpad."id" AS "customer.address.id", ezpad."parentid" AS "customer.address.parentid",
+						SELECT DISTINCT ezpad."id" AS "customer.address.id", ezpad."parentid" AS "customer.address.parentid",
 							ezpad."company" AS "customer.address.company", ezpad."vatid" AS "customer.address.vatid",
 							ezpad."salutation" AS "customer.address.salutation", ezpad."title" AS "customer.address.title",
 							ezpad."firstname" AS "customer.address.firstname", ezpad."lastname" AS "customer.address.lastname",
@@ -60,13 +60,6 @@ return array(
 						FROM "ezuser_address" AS ezpad
 						:joins
 						WHERE :cond
-						GROUP BY ezpad."id", ezpad."parentid",ezpad."company", ezpad."vatid",
-							ezpad."salutation", ezpad."title", ezpad."firstname", ezpad."lastname",
-							ezpad."address1", ezpad."address2", ezpad."address3", ezpad."postal",
-							ezpad."city", ezpad."state", ezpad."countryid", ezpad."langid",
-							ezpad."telephone", ezpad."email", ezpad."telefax", ezpad."website",
-							ezpad."longitude", ezpad."latitude", ezpad."pos",
-							ezpad."mtime", ezpad."editor", ezpad."ctime"
 						/*-orderby*/ ORDER BY :order /*orderby-*/
 						LIMIT :size OFFSET :start
 					',
@@ -123,7 +116,7 @@ return array(
 					),
 					'search' => array(
 						'ansi' => '
-							SELECT ezplity."id" AS "customer.lists.type.id", ezplity."siteid" AS "customer.lists.type.siteid",
+							SELECT DISTINCT ezplity."id" AS "customer.lists.type.id", ezplity."siteid" AS "customer.lists.type.siteid",
 								ezplity."code" AS "customer.lists.type.code", ezplity."domain" AS "customer.lists.type.domain",
 								ezplity."label" AS "customer.lists.type.label", ezplity."status" AS "customer.lists.type.status",
 								ezplity."mtime" AS "customer.lists.type.mtime", ezplity."editor" AS "customer.lists.type.editor",
@@ -132,9 +125,6 @@ return array(
 							FROM "ezuser_list_type" AS ezplity
 							:joins
 							WHERE :cond
-							GROUP BY ezplity."id", ezplity."siteid", ezplity."code", ezplity."domain",
-								ezplity."label", ezplity."status", ezplity."mtime", ezplity."editor",
-								ezplity."ctime", ezplity."pos" /*-columns*/ , :columns /*columns-*/
 							/*-orderby*/ ORDER BY :order /*orderby-*/
 							LIMIT :size OFFSET :start
 						',
@@ -302,7 +292,7 @@ return array(
 					),
 					'search' => array(
 						'ansi' => '
-							SELECT ezpprty."id" AS "customer.property.type.id", ezpprty."siteid" AS "customer.property.type.siteid",
+							SELECT DISTINCT ezpprty."id" AS "customer.property.type.id", ezpprty."siteid" AS "customer.property.type.siteid",
 								ezpprty."code" AS "customer.property.type.code", ezpprty."domain" AS "customer.property.type.domain",
 								ezpprty."label" AS "customer.property.type.label", ezpprty."status" AS "customer.property.type.status",
 								ezpprty."mtime" AS "customer.property.type.mtime", ezpprty."editor" AS "customer.property.type.editor",
@@ -311,9 +301,6 @@ return array(
 							FROM "ezuser_property_type" ezpprty
 							:joins
 							WHERE :cond
-							GROUP BY ezpprty."id", ezpprty."siteid", ezpprty."code", ezpprty."domain",
-								ezpprty."label", ezpprty."status", ezpprty."mtime", ezpprty."editor",
-								ezpprty."ctime", ezpprty."pos" /*-columns*/ , :columns /*columns-*/
 							/*-orderby*/ ORDER BY :order /*orderby-*/
 							LIMIT :size OFFSET :start
 						'
@@ -368,7 +355,7 @@ return array(
 				),
 				'search' => array(
 					'ansi' => '
-						SELECT ezppr."id" AS "customer.property.id", ezppr."parentid" AS "customer.property.parentid",
+						SELECT DISTINCT ezppr."id" AS "customer.property.id", ezppr."parentid" AS "customer.property.parentid",
 							ezppr."siteid" AS "customer.property.siteid", ezppr."type" AS "customer.property.type",
 							ezppr."langid" AS "customer.property.languageid", ezppr."value" AS "customer.property.value",
 							ezppr."mtime" AS "customer.property.mtime", ezppr."editor" AS "customer.property.editor",
@@ -376,9 +363,6 @@ return array(
 						FROM "ezuser_property" AS ezppr
 						:joins
 						WHERE :cond
-						GROUP BY ezppr."id", ezppr."parentid", ezppr."siteid", ezppr."type",
-							ezppr."langid", ezppr."value", ezppr."mtime", ezppr."editor",
-							ezppr."ctime" /*-columns*/ , :columns /*columns-*/
 						/*-orderby*/ ORDER BY :order /*orderby-*/
 						LIMIT :size OFFSET :start
 					'
@@ -442,7 +426,7 @@ return array(
 			),
 			'search' => array(
 				'ansi' => '
-					SELECT ezp."id" AS "customer.id", ezp."siteid" AS "customer.siteid",
+					SELECT DISTINCT ezp."id" AS "customer.id", ezp."siteid" AS "customer.siteid",
 						ezp."username_canonical" as "customer.code", ezp."username" as "customer.label",
 						ezp."company" AS "customer.company", ezp."vatid" AS "customer.vatid",
 						ezp."salutation" AS "customer.salutation", ezp."title" AS "customer.title",
@@ -461,14 +445,6 @@ return array(
 					FROM "ezuser" AS ezp
 					:joins
 					WHERE :cond
-					GROUP BY ezp."id", ezp."siteid", ezp."username_canonical", ezp."username",
-						ezp."company", ezp."vatid", ezp."salutation", ezp."title",
-						ezp."firstname", ezp."lastname", ezp."address1", ezp."address2",
-						ezp."address3", ezp."postal", ezp."city", ezp."state",
-						ezp."countryid", ezp."langid", ezp."telephone", ezp."email_canonical",
-						ezp."telefax", ezp."website", ezp."longitude", ezp."latitude",
-						ezp."birthday", ezp."enabled", ezp."vdate", ezp."password",
-						ezp."ctime", ezp."mtime", ezp."editor", ezp."roles", ezp."salt"
 					/*-orderby*/ ORDER BY :order /*orderby-*/
 					LIMIT :size OFFSET :start
 				',
