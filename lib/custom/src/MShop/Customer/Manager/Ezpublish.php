@@ -222,8 +222,7 @@ class Ezpublish
 			'code' => 'customer:has()',
 			'internalcode' => '(
 				SELECT ezuli_has."id" FROM ezuser_list AS ezuli_has
-				WHERE ezu."id" = ezuli_has."parentid" AND :site AND ezuli_has."domain" = $1 :type :refid
-				LIMIT 1
+				WHERE ezu."id" = ezuli_has."parentid" AND :site AND :key LIMIT 1
 			)',
 			'label' => 'Customer has list item, parameter(<domain>[,<list type>[,<reference ID>)]]',
 			'type' => 'null',
@@ -234,8 +233,7 @@ class Ezpublish
 			'code' => 'customer:prop()',
 			'internalcode' => '(
 				SELECT ezupr_prop."id" FROM ezuser_property AS ezupr_prop
-				WHERE ezu."id" = ezupr_prop."parentid" AND :site AND ezupr_prop."type" = $1 :langid :value
-				LIMIT 1
+				WHERE ezu."id" = ezupr_prop."parentid" AND :site AND :key LIMIT 1
 			)',
 			'label' => 'Customer has property item, parameter(<property type>[,<language code>[,<property value>]])',
 			'type' => 'null',
@@ -268,14 +266,16 @@ class Ezpublish
 			$siteIds = array_merge( $siteIds, $locale->getSiteSubTree() );
 		}
 
-		$this->replaceSiteMarker( $this->searchConfig['customer:has'], 'ezuli_has."siteid"', $siteIds, ':site' );
-		$this->replaceSiteMarker( $this->searchConfig['customer:prop'], 'ezupr_prop."siteid"', $siteIds, ':site' );
-
 
 		$this->searchConfig['customer:has']['function'] = function( &$source, array $params ) {
 
-			$source = str_replace( ':type', isset( $params[1] ) ? 'AND ezuli_has."type" = $2' : '', $source );
-			$source = str_replace( ':refid', isset( $params[2] ) ? 'AND ezuli_has."refid" = $3' : '', $source );
+			foreach( $params as $key => $param ) {
+				$params[$key] = trim( $param, '\'' );
+			}
+
+			$source = str_replace( ':site', $self->toExpression( 'ezuli_has."siteid"', $siteIds ), $source );
+			$str = $self->toExpression( 'ezuli_has."key"', join( '|', $params ), isset( $params[2] ) ? '==' : '=~' );
+			$source = str_replace( ':key', $str, $source );
 
 			return $params;
 		};
@@ -283,11 +283,14 @@ class Ezpublish
 
 		$this->searchConfig['customer:prop']['function'] = function( &$source, array $params ) {
 
-			$lang = 'AND ezupr_prop."langid"';
-			$lang = isset( $params[1] ) ? ( $params[1] !== 'null' ? $lang . ' = $2' : $lang . ' IS NULL' ) : '';
+			foreach( $params as $key => $param ) {
+				$params[$key] = trim( $param, '\'' );
+			}
 
-			$source = str_replace( ':langid', $lang, $source );
-			$source = str_replace( ':value', isset( $params[2] ) ? 'AND ezupr_prop."value" = $3' : '', $source );
+			$params[2] = ( isset( $params[2] ) ? md5( $params[2] ) : null );
+			$source = str_replace( ':site', $self->toExpression( 'ezupr_prop."siteid"', $siteIds ), $source );
+			$str = $self->toExpression( 'ezupr_prop."key"', join( '|', $params ), isset( $params[2] ) ? '==' : '=~' );
+			$source = str_replace( ':key', $str, $source );
 
 			return $params;
 		};
