@@ -18,13 +18,13 @@ return array(
 				),
 				'insert' => array(
 					'ansi' => '
-						INSERT INTO "ezuser_address" (
+						INSERT INTO "ezuser_address" ( :names
 							"parentid", "company", "vatid", "salutation", "title",
 							"firstname", "lastname", "address1", "address2", "address3",
 							"postal", "city", "state", "countryid", "langid", "telephone",
 							"email", "telefax", "website", "longitude", "latitude",
 							"pos", "mtime", "editor", "siteid", "ctime"
-						) VALUES (
+						) VALUES ( :values
 							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 						)
 					',
@@ -32,7 +32,8 @@ return array(
 				'update' => array(
 					'ansi' => '
 						UPDATE "ezuser_address"
-						SET "parentid" = ?, "company" = ?, "vatid" = ?, "salutation" = ?,
+						SET :names
+							"parentid" = ?, "company" = ?, "vatid" = ?, "salutation" = ?,
 							"title" = ?, "firstname" = ?, "lastname" = ?, "address1" = ?,
 							"address2" = ?, "address3" = ?, "postal" = ?, "city" = ?,
 							"state" = ?, "countryid" = ?, "langid" = ?, "telephone" = ?,
@@ -92,10 +93,10 @@ return array(
 				'ezpublish' => array(
 					'insert' => array(
 						'ansi' => '
-							INSERT INTO "ezuser_list_type"(
+							INSERT INTO "ezuser_list_type" ( :names
 								"code", "domain", "label", "pos", "status",
 								"mtime", "editor", "siteid", "ctime"
-							) VALUES (
+							) VALUES ( :values
 								?, ?, ?, ?, ?, ?, ?, ?, ?
 							)
 						',
@@ -103,7 +104,8 @@ return array(
 					'update' => array(
 						'ansi' => '
 							UPDATE "ezuser_list_type"
-							SET "code" = ?, "domain" = ?, "label" = ?, "pos" = ?,
+							SET :names
+								"code" = ?, "domain" = ?, "label" = ?, "pos" = ?,
 								"status" = ?, "mtime" = ?, "editor" = ?
 							WHERE "siteid" = ? AND "id" = ?
 						',
@@ -179,10 +181,10 @@ return array(
 				),
 				'insert' => array(
 					'ansi' => '
-						INSERT INTO "ezuser_list"(
+						INSERT INTO "ezuser_list" ( :names
 							"parentid", "type", "domain", "refid", "start", "end",
 							"config", "pos", "status", "mtime", "editor", "siteid", "ctime"
-						) VALUES (
+						) VALUES ( :values
 							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
 						)
 					',
@@ -190,8 +192,9 @@ return array(
 				'update' => array(
 					'ansi' => '
 						UPDATE "ezuser_list"
-						SET "parentid"=?, "type" = ?, "domain" = ?, "refid" = ?, "start" = ?, "end" = ?,
-							"config" = ?, "pos" = ?, "status" = ?, "mtime" = ?, "editor" = ?
+						SET :names
+							"parentid"=?, "key" = ?, "type" = ?, "domain" = ?, "refid" = ?, "start" = ?,
+							"end" = ?, "config" = ?, "pos" = ?, "status" = ?, "mtime" = ?, "editor" = ?
 						WHERE "siteid" = ? AND "id" = ?
 					',
 				),
@@ -274,10 +277,10 @@ return array(
 					),
 					'insert' => array(
 						'ansi' => '
-							INSERT INTO "ezuser_property_type" (
+							INSERT INTO "ezuser_property_type" ( :names
 								"code", "domain", "label", "pos", "status",
 								"mtime", "editor", "siteid", "ctime"
-							) VALUES (
+							) VALUES ( :values
 								?, ?, ?, ?, ?, ?, ?, ?, ?
 							)
 						'
@@ -285,7 +288,8 @@ return array(
 					'update' => array(
 						'ansi' => '
 							UPDATE "ezuser_property_type"
-							SET "code" = ?, "domain" = ?, "label" = ?, "pos" = ?,
+							SET :names
+								"code" = ?, "domain" = ?, "label" = ?, "pos" = ?,
 								"status" = ?, "mtime" = ?, "editor" = ?
 							WHERE "siteid" = ? AND "id" = ?
 						'
@@ -337,10 +341,10 @@ return array(
 				),
 				'insert' => array(
 					'ansi' => '
-						INSERT INTO "ezuser_property" (
+						INSERT INTO "ezuser_property" ( :names
 							"parentid", "type", "langid", "value",
 							"mtime", "editor", "siteid", "ctime"
-						) VALUES (
+						) VALUES ( :values
 							?, ?, ?, ?, ?, ?, ?, ?
 						)
 					'
@@ -348,7 +352,8 @@ return array(
 				'update' => array(
 					'ansi' => '
 						UPDATE "ezuser_property"
-						SET "parentid" = ?, "type" = ?, "langid" = ?,
+						SET :names
+							"parentid" = ?, "type" = ?, "langid" = ?,
 							"value" = ?, "mtime" = ?, "editor" = ?
 						WHERE "siteid" = ? AND "id" = ?
 					'
@@ -399,14 +404,14 @@ return array(
 			),
 			'insert' => array(
 				'ansi' => '
-					INSERT INTO "ezuser" (
+					INSERT INTO "ezuser" ( :names
 						"siteid", "username_canonical", "username", "company", "vatid", "salutation", "title",
 						"firstname", "lastname", "address1", "address2", "address3",
 						"postal", "city", "state", "countryid", "langid", "telephone",
 						"email_canonical", "email", "telefax", "website", "longitude", "latitude",
 						"birthday", "enabled", "vdate", "password", "mtime", "editor", "roles", "salt",
 						"ctime"
-					) VALUES (
+					) VALUES ( :values
 						?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?
 					)
 				',
@@ -414,7 +419,8 @@ return array(
 			'update' => array(
 				'ansi' => '
 					UPDATE "ezuser"
-					SET "siteid" = ?, "username_canonical" = ?, "username" = ?, "company" = ?, "vatid" = ?,
+					SET :names
+						"siteid" = ?, "username_canonical" = ?, "username" = ?, "company" = ?, "vatid" = ?,
 						"salutation" = ?, "title" = ?, "firstname" = ?, "lastname" = ?,
 						"address1" = ?, "address2" = ?, "address3" = ?, "postal" = ?,
 						"city" = ?, "state" = ?, "countryid" = ?, "langid" = ?,

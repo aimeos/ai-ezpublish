@@ -407,35 +407,44 @@ class Ezpublish
 		try
 		{
 			$date = date( 'Y-m-d H:i:s' );
+			$columns = $this->getObject()->getSaveAttributes();
 			$ctime = ( $item->getTimeCreated() ? $item->getTimeCreated() : $date );
 			$billingAddress = $item->getPaymentAddress();
 
 			$path = 'mshop/customer/manager/ezpublish/update';
-			$stmt = $this->getCachedStatement( $conn, $path );
+			$sql = $this->addSqlColumns( array_keys( $columns ), $this->getSqlConfig( $path ), false );
+			$stmt = $this->getCachedStatement( $conn, $path, $sql );
 
-			$stmt->bind( 1, $billingAddress->getCompany() );
-			$stmt->bind( 2, $billingAddress->getVatID() );
-			$stmt->bind( 3, $billingAddress->getSalutation() );
-			$stmt->bind( 4, $billingAddress->getTitle() );
-			$stmt->bind( 5, $billingAddress->getFirstname() );
-			$stmt->bind( 6, $billingAddress->getLastname() );
-			$stmt->bind( 7, $billingAddress->getAddress1() );
-			$stmt->bind( 8, $billingAddress->getAddress2() );
-			$stmt->bind( 9, $billingAddress->getAddress3() );
-			$stmt->bind( 10, $billingAddress->getPostal() );
-			$stmt->bind( 11, $billingAddress->getCity() );
-			$stmt->bind( 12, $billingAddress->getState() );
-			$stmt->bind( 13, $billingAddress->getCountryId() );
-			$stmt->bind( 14, $billingAddress->getLanguageId() );
-			$stmt->bind( 15, $billingAddress->getTelephone() );
-			$stmt->bind( 16, $billingAddress->getTelefax() );
-			$stmt->bind( 17, $billingAddress->getWebsite() );
-			$stmt->bind( 18, $item->getBirthday() );
-			$stmt->bind( 19, $item->getDateVerified() );
-			$stmt->bind( 20, $date ); // Modification time
-			$stmt->bind( 21, $context->getEditor() );
-			$stmt->bind( 22, $ctime ); // Creation time
-			$stmt->bind( 23, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
+			$idx = 1;
+			$stmt = $this->getCachedStatement( $conn, $path, $sql );
+
+			foreach( $columns as $name => $entry ) {
+				$stmt->bind( $idx++, $item->get( $name ), $entry->getInternalType() );
+			}
+
+			$stmt->bind( $idx++, $billingAddress->getCompany() );
+			$stmt->bind( $idx++, $billingAddress->getVatID() );
+			$stmt->bind( $idx++, $billingAddress->getSalutation() );
+			$stmt->bind( $idx++, $billingAddress->getTitle() );
+			$stmt->bind( $idx++, $billingAddress->getFirstname() );
+			$stmt->bind( $idx++, $billingAddress->getLastname() );
+			$stmt->bind( $idx++, $billingAddress->getAddress1() );
+			$stmt->bind( $idx++, $billingAddress->getAddress2() );
+			$stmt->bind( $idx++, $billingAddress->getAddress3() );
+			$stmt->bind( $idx++, $billingAddress->getPostal() );
+			$stmt->bind( $idx++, $billingAddress->getCity() );
+			$stmt->bind( $idx++, $billingAddress->getState() );
+			$stmt->bind( $idx++, $billingAddress->getCountryId() );
+			$stmt->bind( $idx++, $billingAddress->getLanguageId() );
+			$stmt->bind( $idx++, $billingAddress->getTelephone() );
+			$stmt->bind( $idx++, $billingAddress->getTelefax() );
+			$stmt->bind( $idx++, $billingAddress->getWebsite() );
+			$stmt->bind( $idx++, $item->getBirthday() );
+			$stmt->bind( $idx++, $item->getDateVerified() );
+			$stmt->bind( $idx++, $date ); // Modification time
+			$stmt->bind( $idx++, $context->getEditor() );
+			$stmt->bind( $idx++, $ctime ); // Creation time
+			$stmt->bind( $idx++, $item->getId(), \Aimeos\MW\DB\Statement\Base::PARAM_INT );
 
 			$stmt->execute()->finish();
 
