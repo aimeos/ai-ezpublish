@@ -44,7 +44,8 @@ return array(
 				),
 				'search' => array(
 					'ansi' => '
-						SELECT DISTINCT ezpad."id" AS "customer.address.id", ezpad."parentid" AS "customer.address.parentid",
+						SELECT DISTINCT :columns
+							ezpad."id" AS "customer.address.id", ezpad."parentid" AS "customer.address.parentid",
 							ezpad."company" AS "customer.address.company", ezpad."vatid" AS "customer.address.vatid",
 							ezpad."salutation" AS "customer.address.salutation", ezpad."title" AS "customer.address.title",
 							ezpad."firstname" AS "customer.address.firstname", ezpad."lastname" AS "customer.address.lastname",
@@ -57,7 +58,7 @@ return array(
 							ezpad."longitude" AS "customer.address.longitude", ezpad."latitude" AS "customer.address.latitude",
 							ezpad."pos" AS "customer.address.position", ezpad."mtime" AS "customer.address.mtime",
 							ezpad."editor" AS "customer.address.editor", ezpad."ctime" AS "customer.address.ctime",
-							ezpad."siteid" AS "customer.address.siteid", ezpad.*
+							ezpad."siteid" AS "customer.address.siteid"
 						FROM "ezuser_address" AS ezpad
 						:joins
 						WHERE :cond
@@ -118,12 +119,12 @@ return array(
 					),
 					'search' => array(
 						'ansi' => '
-							SELECT DISTINCT ezplity."id" AS "customer.lists.type.id", ezplity."siteid" AS "customer.lists.type.siteid",
+							SELECT DISTINCT :columns
+								ezplity."id" AS "customer.lists.type.id", ezplity."siteid" AS "customer.lists.type.siteid",
 								ezplity."code" AS "customer.lists.type.code", ezplity."domain" AS "customer.lists.type.domain",
 								ezplity."label" AS "customer.lists.type.label", ezplity."status" AS "customer.lists.type.status",
 								ezplity."mtime" AS "customer.lists.type.mtime", ezplity."editor" AS "customer.lists.type.editor",
-								ezplity."ctime" AS "customer.lists.type.ctime", ezplity."pos" AS "customer.lists.type.position",
-								ezplity.*
+								ezplity."ctime" AS "customer.lists.type.ctime", ezplity."pos" AS "customer.lists.type.position"
 							FROM "ezuser_list_type" AS ezplity
 							:joins
 							WHERE :cond
@@ -224,21 +225,21 @@ return array(
 				),
 				'search' => array(
 					'ansi' => '
-						SELECT ezpli."id" AS "customer.lists.id", ezpli."siteid" AS "customer.lists.siteid",
+						SELECT :columns
+							ezpli."id" AS "customer.lists.id", ezpli."siteid" AS "customer.lists.siteid",
 							ezpli."parentid" AS "customer.lists.parentid", ezpli."type" AS "customer.lists.type",
 							ezpli."domain" AS "customer.lists.domain", ezpli."refid" AS "customer.lists.refid",
 							ezpli."start" AS "customer.lists.datestart", ezpli."end" AS "customer.lists.dateend",
 							ezpli."config" AS "customer.lists.config", ezpli."pos" AS "customer.lists.position",
 							ezpli."status" AS "customer.lists.status", ezpli."mtime" AS "customer.lists.mtime",
-							ezpli."editor" AS "customer.lists.editor", ezpli."ctime" AS "customer.lists.ctime",
-							ezpli.*
+							ezpli."editor" AS "customer.lists.editor", ezpli."ctime" AS "customer.lists.ctime"
 						FROM "ezuser_list" AS ezpli
 						:joins
 						WHERE :cond
-						GROUP BY ezpli."id", ezpli."parentid", ezpli."siteid", ezpli."type",
+						GROUP BY :columns ezpli."id", ezpli."parentid", ezpli."siteid", ezpli."type",
 							ezpli."domain", ezpli."refid", ezpli."start", ezpli."end",
 							ezpli."config", ezpli."pos", ezpli."status", ezpli."mtime",
-							ezpli."editor", ezpli."ctime" /*-columns*/ , :columns /*columns-*/
+							ezpli."editor", ezpli."ctime"
 						/*-orderby*/ ORDER BY :order /*orderby-*/
 						LIMIT :size OFFSET :start
 					',
@@ -296,12 +297,12 @@ return array(
 					),
 					'search' => array(
 						'ansi' => '
-							SELECT DISTINCT ezpprty."id" AS "customer.property.type.id", ezpprty."siteid" AS "customer.property.type.siteid",
+							SELECT DISTINCT :columns
+								ezpprty."id" AS "customer.property.type.id", ezpprty."siteid" AS "customer.property.type.siteid",
 								ezpprty."code" AS "customer.property.type.code", ezpprty."domain" AS "customer.property.type.domain",
 								ezpprty."label" AS "customer.property.type.label", ezpprty."status" AS "customer.property.type.status",
 								ezpprty."mtime" AS "customer.property.type.mtime", ezpprty."editor" AS "customer.property.type.editor",
-								ezpprty."ctime" AS "customer.property.type.ctime", ezpprty."pos" AS "customer.property.type.position",
-								ezpprty.*
+								ezpprty."ctime" AS "customer.property.type.ctime", ezpprty."pos" AS "customer.property.type.position"
 							FROM "ezuser_property_type" ezpprty
 							:joins
 							WHERE :cond
@@ -360,11 +361,12 @@ return array(
 				),
 				'search' => array(
 					'ansi' => '
-						SELECT DISTINCT ezppr."id" AS "customer.property.id", ezppr."parentid" AS "customer.property.parentid",
+						SELECT DISTINCT :columns
+							ezppr."id" AS "customer.property.id", ezppr."parentid" AS "customer.property.parentid",
 							ezppr."siteid" AS "customer.property.siteid", ezppr."type" AS "customer.property.type",
 							ezppr."langid" AS "customer.property.languageid", ezppr."value" AS "customer.property.value",
 							ezppr."mtime" AS "customer.property.mtime", ezppr."editor" AS "customer.property.editor",
-							ezppr."ctime" AS "customer.property.ctime", ezppr.*
+							ezppr."ctime" AS "customer.property.ctime"
 						FROM "ezuser_property" AS ezppr
 						:joins
 						WHERE :cond
@@ -432,7 +434,8 @@ return array(
 			),
 			'search' => array(
 				'ansi' => '
-					SELECT DISTINCT ezp."id" AS "customer.id", ezp."siteid" AS "customer.siteid",
+					SELECT DISTINCT :columns
+						ezp."id" AS "customer.id", ezp."siteid" AS "customer.siteid",
 						ezp."username_canonical" as "customer.code", ezp."username" as "customer.label",
 						ezp."company" AS "customer.company", ezp."vatid" AS "customer.vatid",
 						ezp."salutation" AS "customer.salutation", ezp."title" AS "customer.title",
@@ -447,7 +450,7 @@ return array(
 						ezp."birthday" AS "customer.birthday", ezp."enabled" AS "customer.status",
 						ezp."vdate" AS "customer.vdate", ezp."password" AS "customer.password",
 						ezp."ctime" AS "customer.ctime", ezp."mtime" AS "customer.mtime",
-						ezp."editor" AS "customer.editor", ezp."roles", ezp."salt", ezp.*
+						ezp."editor" AS "customer.editor", ezp."roles", ezp."salt"
 					FROM "ezuser" AS ezp
 					:joins
 					WHERE :cond
