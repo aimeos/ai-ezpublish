@@ -52,11 +52,4 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getSubManager( 'unknown' );
 	}
-
-
-	public function testSaveItemInvalidItem()
-	{
-		$this->setExpectedException( \Aimeos\MW\Common\Exception::class );
-		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Type\Standard( 'common.property.type.' ) );
-	}
 }

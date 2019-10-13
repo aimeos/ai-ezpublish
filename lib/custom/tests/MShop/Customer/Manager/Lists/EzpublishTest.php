@@ -54,13 +54,6 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	public function testSaveItemInvalidItem()
-	{
-		$this->setExpectedException( \Aimeos\MW\Common\Exception::class );
-		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Type\Standard( 'common.lists.type.' ) );
-	}
-
-
 	public function testSaveItemInvalidDomain()
 	{
 		$item = $this->object->createItem();

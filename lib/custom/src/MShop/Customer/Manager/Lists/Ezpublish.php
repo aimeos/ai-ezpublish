@@ -175,16 +175,15 @@ class Ezpublish
 	 *
 	 * @param \Aimeos\MShop\Common\Item\Lists\Iface $item List item object which should be saved
 	 * @param boolean $fetch True if the new ID should be returned in the item
+	 * @return \Aimeos\MShop\Common\Item\Lists\Iface $item Updated item including the generated ID
 	 */
-	public function saveItem( \Aimeos\MShop\Common\Item\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MShop\Common\Item\Lists\Iface $item, $fetch = true )
 	{
-		self::checkClass( '\\Aimeos\\MShop\\Common\\Item\\Lists\\Iface', $item );
-
 		if( $item->getDomain() === 'customer/group' ) {
 			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Adding groups to customers is not supported, please use the eZ Publish backend' ) );
 		}
 
-		parent::saveItem( $item, $fetch );
+		return parent::saveItem( $item, $fetch );
 	}
 
 

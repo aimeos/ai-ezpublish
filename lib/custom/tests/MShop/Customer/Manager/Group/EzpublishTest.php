@@ -64,7 +64,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	public function testSaveItem()
 	{
 		$this->setExpectedException( '\\Aimeos\\MShop\\Customer\\Exception' );
-		$this->object->saveItem( new \Aimeos\MShop\Common\Item\Lists\Standard( 'common.lists.' ) );
+		$this->object->saveItem( new \Aimeos\MShop\Customer\Item\Group\Standard() );
 	}
 
 

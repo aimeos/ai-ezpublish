@@ -121,7 +121,7 @@ class Ezpublish
 	 * @param \Aimeos\MShop\Customer\Item\Group\Iface $item Customer group item
 	 * @param boolean $fetch True if the new ID should be returned in the item
 	 */
-	public function saveItem( \Aimeos\MShop\Common\Item\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MShop\Customer\Item\Group\Iface $item, $fetch = true )
 	{
 		throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Saving groups is not supported, please use the eZ Publish backend' ) );
 	}
