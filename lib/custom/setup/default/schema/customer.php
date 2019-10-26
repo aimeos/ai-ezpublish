@@ -8,7 +8,7 @@
 
 return array(
 	'table' => array(
-		'ezuser' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+		'ezuser' => function( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser' );
 
@@ -25,7 +25,7 @@ return array(
 			return $schema;
 		},
 
-		'ezuser_address' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+		'ezuser_address' => function( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser_address' );
 
@@ -53,7 +53,7 @@ return array(
 			$table->addColumn( 'pos', 'smallint', [] );
 			$table->addColumn( 'mtime', 'datetime', [] );
 			$table->addColumn( 'ctime', 'datetime', [] );
-			$table->addColumn( 'editor', 'string', array('length' => 255 ) );
+			$table->addColumn( 'editor', 'string', array( 'length' => 255 ) );
 
 			$table->setPrimaryKey( array( 'id' ), 'pk_ezpad_id' );
 			$table->addIndex( array( 'lastname', 'firstname' ), 'idx_ezpad_ln_fn' );
@@ -68,7 +68,7 @@ return array(
 			return $schema;
 		},
 
-		'ezuser_list_type' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+		'ezuser_list_type' => function( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser_list_type' );
 
@@ -92,7 +92,7 @@ return array(
 			return $schema;
 		},
 
-		'ezuser_list' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+		'ezuser_list' => function( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser_list' );
 
@@ -122,7 +122,7 @@ return array(
 			return $schema;
 		},
 
-		'ezuser_property_type' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+		'ezuser_property_type' => function( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser_property_type' );
 
@@ -146,7 +146,7 @@ return array(
 			return $schema;
 		},
 
-		'ezuser_property' => function ( \Doctrine\DBAL\Schema\Schema $schema ) {
+		'ezuser_property' => function( \Doctrine\DBAL\Schema\Schema $schema ) {
 
 			$table = $schema->createTable( 'ezuser_property' );
 
