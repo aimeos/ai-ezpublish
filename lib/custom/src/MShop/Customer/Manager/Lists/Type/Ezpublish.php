@@ -102,7 +102,7 @@ class Ezpublish
 			$this->getObject()->getSubManager( $domain )->clear( $siteids );
 		}
 
-		$this->cleanupBase( $siteids, $this->getConfigPath() . 'delete' );
+		$this->clearBase( $siteids, $this->getConfigPath() . 'delete' );
 	}
 
 
