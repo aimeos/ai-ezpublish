@@ -37,7 +37,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testCleanup()
 	{
-		$this->object->cleanup( array( -1 ) );
+		$this->object->clear( array( -1 ) );
 	}
 
 

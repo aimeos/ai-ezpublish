@@ -72,7 +72,7 @@ class Ezpublish
 	 *
 	 * @param integer[] $siteids List of IDs for sites whose entries should be deleted
 	 */
-	public function cleanup( array $siteids )
+	public function clear( array $siteids )
 	{
 	}
 

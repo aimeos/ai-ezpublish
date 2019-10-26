@@ -302,11 +302,11 @@ class Ezpublish
 	 *
 	 * @param array $siteids List of IDs for sites whose entries should be deleted
 	 */
-	public function cleanup( array $siteids )
+	public function clear( array $siteids )
 	{
 		$path = 'mshop/customer/manager/submanagers';
 		foreach( $this->getContext()->getConfig()->get( $path, ['address', 'group', 'lists', 'property'] ) as $domain ) {
-			$this->getObject()->getSubManager( $domain )->cleanup( $siteids );
+			$this->getObject()->getSubManager( $domain )->clear( $siteids );
 		}
 	}
 
