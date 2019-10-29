@@ -252,22 +252,14 @@ class Ezpublish
 	{
 		parent::__construct( $context );
 
-		$locale = $context->getLocale();
 		$level = \Aimeos\MShop\Locale\Manager\Base::SITE_ALL;
 		$level = $context->getConfig()->get( 'mshop/customer/manager/sitemode', $level );
 
-		$siteIds = [$locale->getSiteId()];
-
-		if( $level & \Aimeos\MShop\Locale\Manager\Base::SITE_PATH ) {
-			$siteIds = array_merge( $siteIds, $locale->getSitePath() );
-		}
-
-		if( $level & \Aimeos\MShop\Locale\Manager\Base::SITE_SUBTREE ) {
-			$siteIds = array_merge( $siteIds, $locale->getSiteSubTree() );
-		}
+		$siteIds = $this->getSiteIds( $level );
+		$self = $this;
 
 
-		$this->searchConfig['customer:has']['function'] = function( &$source, array $params ) {
+		$this->searchConfig['customer:has']['function'] = function( &$source, array $params ) use ( $self, $siteIds ) {
 
 			foreach( $params as $key => $param ) {
 				$params[$key] = trim( $param, '\'' );
@@ -281,7 +273,7 @@ class Ezpublish
 		};
 
 
-		$this->searchConfig['customer:prop']['function'] = function( &$source, array $params ) {
+		$this->searchConfig['customer:prop']['function'] = function( &$source, array $params ) use ( $self, $siteIds ) {
 
 			foreach( $params as $key => $param ) {
 				$params[$key] = trim( $param, '\'' );
