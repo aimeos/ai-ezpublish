@@ -478,8 +478,8 @@ class Ezpublish
 
 			while( ( $row = $results->fetch() ) !== false )
 			{
-				$map[ $row['customer.id'] ] = $row;
-				$map[ $row['customer.id'] ]['customer.groups'] = [];
+				$map[$row['customer.id']] = $row;
+				$map[$row['customer.id']]['customer.groups'] = [];
 			}
 
 
@@ -495,7 +495,7 @@ class Ezpublish
 		}
 		catch( \Exception $e )
 		{
-			$dbm->release( $conn, $dbname  );
+			$dbm->release( $conn, $dbname );
 			throw $e;
 		}
 
