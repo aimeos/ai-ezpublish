@@ -511,7 +511,7 @@ class Ezpublish
 			$propItems = $this->getPropertyItems( array_keys( $map ), 'customer', $propTypes );
 		}
 
-		return $this->buildItems( $map, $ref, 'customer', 'customer', $addrItems, $propItems );
+		return $this->buildItems( $map, $ref, 'customer', $addrItems, $propItems );
 	}
 
 
