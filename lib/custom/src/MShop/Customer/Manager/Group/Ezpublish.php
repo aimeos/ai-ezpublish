@@ -78,11 +78,12 @@ class Ezpublish
 
 
 	/**
-	 * Removes multiple items specified by their IDs
+	 * Removes multiple items.
 	 *
-	 * @param array $ids List of IDs
+	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
+	 * @return \Aimeos\MShop\Common\Manager\Iface Manager object for chaining method calls
 	 */
-	public function deleteItems( array $ids )
+	public function deleteItems( array $itemIds )
 	{
 		throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Deleting groups is not supported, please use the eZ Publish backend' ) );
 	}

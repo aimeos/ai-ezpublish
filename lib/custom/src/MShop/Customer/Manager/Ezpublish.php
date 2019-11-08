@@ -304,17 +304,20 @@ class Ezpublish
 
 
 	/**
-	 * Removes multiple items specified by ids in the array.
+	 * Removes multiple items.
 	 *
-	 * @param array $ids List of IDs
+	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
+	 * @return \Aimeos\MShop\Common\Manager\Iface Manager object for chaining method calls
 	 */
-	public function deleteItems( array $ids )
+	public function deleteItems( array $itemIds )
 	{
 		$service = $this->getContext()->getEzUserService();
 
-		foreach( $ids as $id ) {
-			$service->deleteUser( $service->loadUser( $id ) );
+		foreach( $itemIds as $id ) {
+			$service->deleteUser( $service->loadUser( (string) $id ) );
 		}
+
+		return $this->deleteRefItems( $itemIds );
 	}
 
 
