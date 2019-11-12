@@ -35,7 +35,7 @@ class TypesMigrateColumnsEzpublish extends \Aimeos\MW\Setup\Task\TypesMigrateCol
 	 *
 	 * @return array List of task names
 	 */
-	public function getPostDependencies()
+	public function getPostDependencies() : array
 	{
 		return ['TablesCreateMShop'];
 	}
