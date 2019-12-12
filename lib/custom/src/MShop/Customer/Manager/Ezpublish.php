@@ -220,10 +220,8 @@ class Ezpublish
 		),
 		'customer:has' => array(
 			'code' => 'customer:has()',
-			'internalcode' => '(
-				SELECT ezuli_has."id" FROM ezuser_list AS ezuli_has
-				WHERE ezu."id" = ezuli_has."parentid" AND :site AND :key LIMIT 1
-			)',
+			'internalcode' => ':site :key AND ezuli."id"',
+			'internaldeps' => ['LEFT JOIN "ezuser_list" AS ezuli ON ( ezuli."parentid" = ezu."id" )'],
 			'label' => 'Customer has list item, parameter(<domain>[,<list type>[,<reference ID>)]]',
 			'type' => 'null',
 			'internaltype' => 'null',
@@ -231,10 +229,8 @@ class Ezpublish
 		),
 		'customer:prop' => array(
 			'code' => 'customer:prop()',
-			'internalcode' => '(
-				SELECT ezupr_prop."id" FROM ezuser_property AS ezupr_prop
-				WHERE ezu."id" = ezupr_prop."parentid" AND :site AND :key LIMIT 1
-			)',
+			'internalcode' => ':site :key AND ezupr."id"',
+			'internaldeps' => ['LEFT JOIN "ezuser_property" AS ezupr ON ( ezupr."parentid" = ezu."id" )'],
 			'label' => 'Customer has property item, parameter(<property type>[,<language code>[,<property value>]])',
 			'type' => 'null',
 			'internaltype' => 'null',
@@ -261,13 +257,21 @@ class Ezpublish
 
 		$this->searchConfig['customer:has']['function'] = function( &$source, array $params ) use ( $self, $siteIds ) {
 
-			foreach( $params as $key => $param ) {
-				$params[$key] = trim( $param, '\'' );
+			array_walk_recursive( $params, function( &$v ) {
+				$v = trim( $v, '\'' );
+			} );
+
+			$keys = [];
+			$params[1] = isset( $params[1] ) ? $params[1] : '';
+			$params[2] = isset( $params[2] ) ? $params[2] : '';
+
+			foreach( (array) $params[2] as $id ) {
+				$keys[] = $params[0] . '|' . ( $params[1] ? $params[1] . '|' : '' ) . $id;
 			}
 
-			$source = str_replace( ':site', $siteIds ? $self->toExpression( 'ezuli_has."siteid"', $siteIds ) : '1=1', $source );
-			$str = $self->toExpression( 'ezuli_has."key"', join( '|', $params ), isset( $params[2] ) ? '==' : '=~' );
-			$source = str_replace( ':key', $str, $source );
+			$sitestr = $siteIds ? $self->toExpression( 'ezuli."siteid"', $siteIds ) . ' AND' : '';
+			$keystr = $self->toExpression( 'ezuli."key"', $keys, $params[2] !== '' ? '==' : '=~' );
+			$source = str_replace( [':site', ':key'], [$sitestr, $keystr], $source );
 
 			return $params;
 		};
@@ -275,14 +279,21 @@ class Ezpublish
 
 		$this->searchConfig['customer:prop']['function'] = function( &$source, array $params ) use ( $self, $siteIds ) {
 
-			foreach( $params as $key => $param ) {
-				$params[$key] = trim( $param, '\'' );
+			array_walk_recursive( $params, function( &$v ) {
+				$v = trim( $v, '\'' );
+			} );
+
+			$keys = [];
+			$params[1] = array_key_exists( 1, $params ) ? $params[1] : '';
+			$params[2] = isset( $params[2] ) ? $params[2] : '';
+
+			foreach( (array) $params[2] as $id ) {
+				$keys[] = $params[0] . '|' . ( $params[1] ? $params[1] . '|' : '' ) .( $id !== '' ?  md5( $id ) : '' );
 			}
 
-			$params[2] = ( isset( $params[2] ) ? md5( $params[2] ) : null );
-			$source = str_replace( ':site', $siteIds ? $self->toExpression( 'ezupr_prop."siteid"', $siteIds ) : '1=1', $source );
-			$str = $self->toExpression( 'ezupr_prop."key"', join( '|', $params ), isset( $params[2] ) ? '==' : '=~' );
-			$source = str_replace( ':key', $str, $source );
+			$sitestr = $siteIds ? $self->toExpression( 'ezupr."siteid"', $siteIds ) . ' AND' : '';
+			$keystr = $self->toExpression( 'ezupr."key"', $keys, $params[2] !== '' ? '==' : '=~' );
+			$source = str_replace( [':site', ':key'], [$sitestr, $keystr], $source );
 
 			return $params;
 		};
