@@ -33,8 +33,8 @@ class Ezpublish
 			'code' => 'customer.property.type.siteid',
 			'internalcode' => 'ezpprty."siteid"',
 			'label' => 'Property type site ID',
-			'type' => 'integer',
-			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_INT,
+			'type' => 'string',
+			'internaltype' => \Aimeos\MW\DB\Statement\Base::PARAM_STR,
 			'public' => false,
 		),
 		'customer.property.type.label' => array(

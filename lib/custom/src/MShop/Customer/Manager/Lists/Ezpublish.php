@@ -35,8 +35,8 @@ class Ezpublish
 			'code'=>'customer.lists.siteid',
 			'internalcode'=>'ezuli."siteid"',
 			'label'=>'Customer list site ID',
-			'type'=> 'integer',
-			'internaltype'=> \Aimeos\MW\DB\Statement\Base::PARAM_INT,
+			'type'=> 'string',
+			'internaltype'=> \Aimeos\MW\DB\Statement\Base::PARAM_STR,
 			'public' => false,
 		),
 		'customer.lists.parentid'=> array(
