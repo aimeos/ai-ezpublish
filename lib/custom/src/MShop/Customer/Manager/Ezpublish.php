@@ -220,7 +220,7 @@ class Ezpublish
 		),
 		'customer:has' => array(
 			'code' => 'customer:has()',
-			'internalcode' => ':site :key AND ezuli."id"',
+			'internalcode' => ':site AND :key AND ezuli."id"',
 			'internaldeps' => ['LEFT JOIN "ezuser_list" AS ezuli ON ( ezuli."parentid" = ezu."id" )'],
 			'label' => 'Customer has list item, parameter(<domain>[,<list type>[,<reference ID>)]]',
 			'type' => 'null',
@@ -229,7 +229,7 @@ class Ezpublish
 		),
 		'customer:prop' => array(
 			'code' => 'customer:prop()',
-			'internalcode' => ':site :key AND ezupr."id"',
+			'internalcode' => ':site AND :key AND ezupr."id"',
 			'internaldeps' => ['LEFT JOIN "ezuser_property" AS ezupr ON ( ezupr."parentid" = ezu."id" )'],
 			'label' => 'Customer has property item, parameter(<property type>[,<language code>[,<property value>]])',
 			'type' => 'null',
@@ -251,11 +251,8 @@ class Ezpublish
 		$level = \Aimeos\MShop\Locale\Manager\Base::SITE_ALL;
 		$level = $context->getConfig()->get( 'mshop/customer/manager/sitemode', $level );
 
-		$siteIds = $this->getSiteIds( $level );
-		$self = $this;
 
-
-		$this->searchConfig['customer:has']['function'] = function( &$source, array $params ) use ( $self, $siteIds ) {
+		$this->searchConfig['customer:has']['function'] = function( &$source, array $params ) use ( $level ) {
 
 			array_walk_recursive( $params, function( &$v ) {
 				$v = trim( $v, '\'' );
@@ -271,15 +268,15 @@ class Ezpublish
 				}
 			}
 
-			$sitestr = $siteIds ? $self->toExpression( 'ezuli."siteid"', $siteIds ) . ' AND' : '';
-			$keystr = $self->toExpression( 'ezuli."key"', $keys, $params[2] !== '' ? '==' : '=~' );
+			$sitestr = $this->getSiteString( 'ezuli."siteid"', $level );
+			$keystr = $this->toExpression( 'ezuli."key"', $keys, $params[2] !== '' ? '==' : '=~' );
 			$source = str_replace( [':site', ':key'], [$sitestr, $keystr], $source );
 
 			return $params;
 		};
 
 
-		$this->searchConfig['customer:prop']['function'] = function( &$source, array $params ) use ( $self, $siteIds ) {
+		$this->searchConfig['customer:prop']['function'] = function( &$source, array $params ) use ( $level ) {
 
 			array_walk_recursive( $params, function( &$v ) {
 				$v = trim( $v, '\'' );
@@ -295,8 +292,8 @@ class Ezpublish
 				}
 			}
 
-			$sitestr = $siteIds ? $self->toExpression( 'ezupr."siteid"', $siteIds ) . ' AND' : '';
-			$keystr = $self->toExpression( 'ezupr."key"', $keys, $params[2] !== '' ? '==' : '=~' );
+			$sitestr = $this->getSiteString( 'ezupr."siteid"', $level );
+			$keystr = $this->toExpression( 'ezupr."key"', $keys, $params[2] !== '' ? '==' : '=~' );
 			$source = str_replace( [':site', ':key'], [$sitestr, $keystr], $source );
 
 			return $params;
