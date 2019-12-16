@@ -24,8 +24,8 @@ class TypesMigrateColumnsEzpublish extends \Aimeos\MW\Setup\Task\TypesMigrateCol
 
 	private $migrations = [
 		'db-customer' => [
-			'ezuser_list' => 'UPDATE "ezuser_list" SET "type" = ( SELECT "code" FROM "ezuser_list_type" AS t WHERE t."id" = "typeid" AND t."domain" = "domain" LIMIT 1 ) WHERE "type" IS NULL',
-			'ezuser_property' => 'UPDATE "ezuser_property" SET "type" = ( SELECT "code" FROM "ezuser_property_type" AS t WHERE t."id" = "typeid" AND t."domain" = "domain" LIMIT 1 ) WHERE "type" IS NULL',
+			'ezuser_list' => 'UPDATE "ezuser_list" SET "type" = ( SELECT "code" FROM "ezuser_list_type" AS t WHERE t."id" = "typeid" AND t."domain" = "domain" LIMIT 1 ) WHERE "type" = \'\'',
+			'ezuser_property' => 'UPDATE "ezuser_property" SET "type" = ( SELECT "code" FROM "ezuser_property_type" AS t WHERE t."id" = "typeid" AND t."domain" = "domain" LIMIT 1 ) WHERE "type" = \'\'',
 		],
 	];
 
