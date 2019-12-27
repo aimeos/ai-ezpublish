@@ -28,7 +28,7 @@ class Ezpublish extends \Aimeos\MShop\Context\Item\Standard
 	 * @param \eZ\Publish\API\Repository\UserService $service eZ user service object
 	 * @return \Aimeos\MShop\Context\Item\Iface Context item for chaining method calls
 	 */
-	public function setEzUserService( \eZ\Publish\API\Repository\UserService $service )
+	public function setEzUserService( \eZ\Publish\API\Repository\UserService $service ) : \Aimeos\MShop\Context\Item\Iface
 	{
 		$this->ezUserService = $service;
 		return $this;
@@ -40,7 +40,7 @@ class Ezpublish extends \Aimeos\MShop\Context\Item\Standard
 	 *
 	 * @return \eZ\Publish\API\Repository\UserService eZ user service object
 	 */
-	public function getEzUserService()
+	public function getEzUserService() : \eZ\Publish\API\Repository\UserService
 	{
 		if( !isset( $this->ezUserService ) ) {
 			throw new \Aimeos\MShop\Exception( sprintf( 'eZ user service not available' ) );

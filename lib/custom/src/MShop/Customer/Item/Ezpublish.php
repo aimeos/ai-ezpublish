@@ -25,9 +25,9 @@ class Ezpublish extends Standard implements Iface
 	/**
 	 * Returns the password of the customer item
 	 *
-	 * @return string
+	 * @return string|null Password
 	 */
-	public function getPassword()
+	public function getPassword() : ?string
 	{
 		return $this->password;
 	}
@@ -39,11 +39,11 @@ class Ezpublish extends Standard implements Iface
 	 * @param string $value password of the customer item
 	 * @return \Aimeos\MShop\Customer\Item\Iface Customer item for chaining method calls
 	 */
-	public function setPassword( $value )
+	public function setPassword( string $value ) : \Aimeos\MShop\Customer\Item\Iface
 	{
 		if( $value !== '' && $value != $this->getPassword() )
 		{
-			$this->password = (string) $value;
+			$this->password = $value;
 			$this->setModified();
 		}
 
