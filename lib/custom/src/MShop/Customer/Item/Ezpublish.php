@@ -25,11 +25,11 @@ class Ezpublish extends Standard implements Iface
 	/**
 	 * Returns the password of the customer item
 	 *
-	 * @return string|null Password
+	 * @return string Password
 	 */
-	public function getPassword() : ?string
+	public function getPassword() : string
 	{
-		return $this->password;
+		return (string) $this->password;
 	}
 
 
