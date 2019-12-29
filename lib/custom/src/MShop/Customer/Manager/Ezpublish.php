@@ -304,14 +304,17 @@ class Ezpublish
 	/**
 	 * Removes old entries from the storage.
 	 *
-	 * @param array $siteids List of IDs for sites whose entries should be deleted
+	 * @param string[] $siteids List of IDs for sites whose entries should be deleted
+	 * @return \Aimeos\MShop\Common\Manager\Iface Same object for fluent interface
 	 */
-	public function clear( array $siteids )
+	public function clear( array $siteids ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		$path = 'mshop/customer/manager/submanagers';
 		foreach( $this->getContext()->getConfig()->get( $path, ['address', 'group', 'lists', 'property'] ) as $domain ) {
 			$this->getObject()->getSubManager( $domain )->clear( $siteids );
 		}
+
+		return $this;
 	}
 
 
@@ -321,7 +324,7 @@ class Ezpublish
 	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
 	 * @return \Aimeos\MShop\Common\Manager\Iface Manager object for chaining method calls
 	 */
-	public function deleteItems( array $itemIds )
+	public function deleteItems( array $itemIds ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		$service = $this->getContext()->getEzUserService();
 
@@ -336,10 +339,10 @@ class Ezpublish
 	/**
 	 * Returns the list attributes that can be used for searching.
 	 *
-	 * @param boolean $withsub Return also attributes of sub-managers if true
+	 * @param bool $withsub Return also attributes of sub-managers if true
 	 * @return array List of attribute items implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
-	public function getSearchAttributes( $withsub = true )
+	public function getSearchAttributes( bool $withsub = true ) : array
 	{
 		$path = 'mshop/customer/manager/submanagers';
 
@@ -352,9 +355,9 @@ class Ezpublish
 	 *
 	 * @param string $manager Name of the sub manager type in lower case
 	 * @param string|null $name Name of the implementation, will be from configuration (or Default) if null
-	 * @return mixed Manager for different extensions, e.g stock, tags, locations, etc.
+	 * @return \Aimeos\MShop\Common\Manager\Iface Manager for different extensions, e.g stock, tags, locations, etc.
 	 */
-	public function getSubManager( $manager, $name = null )
+	public function getSubManager( string $manager, string $name = null ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		return $this->getSubManagerBase( 'customer', $manager, ( $name === null ? 'Ezpublish' : $name ) );
 	}
@@ -364,10 +367,10 @@ class Ezpublish
 	 * Saves a customer item object.
 	 *
 	 * @param \Aimeos\MShop\Customer\Item\Iface $item Customer item object
-	 * @param boolean $fetch True if the new ID should be returned in the item
+	 * @param bool $fetch True if the new ID should be returned in the item
 	 * @return \Aimeos\MShop\Customer\Item\Iface $item Updated item including the generated ID
 	 */
-	public function saveItem( \Aimeos\MShop\Customer\Item\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MShop\Customer\Item\Iface $item, bool $fetch = true ) : \Aimeos\MShop\Customer\Item\Iface
 	{
 		if( !$item->isModified() )
 		{
@@ -475,7 +478,7 @@ class Ezpublish
 	 * @return array List of items implementing \Aimeos\MShop\Customer\Item\Iface
 	 * @throws \Aimeos\MShop\Customer\Exception If creating items failed
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : array
 	{
 		$dbm = $this->getContext()->getDatabaseManager();
 		$dbname = $this->getResourceName();
@@ -541,7 +544,7 @@ class Ezpublish
 	 * @return \Aimeos\MShop\Customer\Item\Iface New customer item
 	 */
 	protected function createItemBase( array $values = [], array $listItems = [], array $refItems = [],
-		array $addrItems = [], array $propItems = [] )
+		array $addrItems = [], array $propItems = [] ) : \Aimeos\MShop\Common\Item\Iface
 	{
 		$address = new \Aimeos\MShop\Common\Item\Address\Simple( 'customer.', $values );
 
@@ -558,7 +561,7 @@ class Ezpublish
 	 * @param string $cfgpath Configuration path to the SQL statement
 	 * @return string SQL statement ready for execution
 	 */
-	protected function getGroupSql( array $ids, $cfgpath )
+	protected function getGroupSql( array $ids, string $cfgpath ) : string
 	{
 		if( empty( $ids ) ) { return '1=1'; }
 

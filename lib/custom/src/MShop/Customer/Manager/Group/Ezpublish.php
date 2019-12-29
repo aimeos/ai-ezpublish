@@ -70,10 +70,12 @@ class Ezpublish
 	/**
 	 * Removes old entries from the database
 	 *
-	 * @param integer[] $siteids List of IDs for sites whose entries should be deleted
+	 * @param string[] $siteids List of IDs for sites whose entries should be deleted
+	 * @return \Aimeos\MShop\Common\Manager\Iface Same object for fluent interface
 	 */
-	public function clear( array $siteids )
+	public function clear( array $siteids ) : \Aimeos\MShop\Common\Manager\Iface
 	{
+		return $this;
 	}
 
 
@@ -83,7 +85,7 @@ class Ezpublish
 	 * @param \Aimeos\MShop\Common\Item\Iface[]|string[] $itemIds List of item objects or IDs of the items
 	 * @return \Aimeos\MShop\Common\Manager\Iface Manager object for chaining method calls
 	 */
-	public function deleteItems( array $itemIds )
+	public function deleteItems( array $itemIds ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Deleting groups is not supported, please use the eZ Publish backend' ) );
 	}
@@ -92,10 +94,10 @@ class Ezpublish
 	/**
 	 * Returns the attributes that can be used for searching.
 	 *
-	 * @param boolean $withsub Return also attributes of sub-managers if true
+	 * @param bool $withsub Return also attributes of sub-managers if true
 	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
-	public function getSearchAttributes( $withsub = true )
+	public function getSearchAttributes( bool $withsub = true ) : array
 	{
 		$path = 'mshop/customer/manager/group/submanagers';
 
@@ -110,7 +112,7 @@ class Ezpublish
 	 * @param string|null $name Name of the implementation, will be from configuration (or Default) if null
 	 * @return \Aimeos\MShop\Common\Manager\Iface Manager for different extensions
 	 */
-	public function getSubManager( $manager, $name = null )
+	public function getSubManager( string $manager, string $name = null ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		return $this->getSubManagerBase( 'customer/group', $manager, ( $name === null ? 'Ezpublish' : $name ) );
 	}
@@ -120,9 +122,9 @@ class Ezpublish
 	 * Inserts a new or updates an existing customer group item
 	 *
 	 * @param \Aimeos\MShop\Customer\Item\Group\Iface $item Customer group item
-	 * @param boolean $fetch True if the new ID should be returned in the item
+	 * @param bool $fetch True if the new ID should be returned in the item
 	 */
-	public function saveItem( \Aimeos\MShop\Customer\Item\Group\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MShop\Customer\Item\Group\Iface $item, bool $fetch = true ) : \Aimeos\MShop\Customer\Item\Group\Iface
 	{
 		throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Saving groups is not supported, please use the eZ Publish backend' ) );
 	}
@@ -137,7 +139,7 @@ class Ezpublish
 	 * @return array List of items implementing \Aimeos\MShop\Customer\Item\Group\Iface
 	 * @throws \Aimeos\MShop\Exception If retrieving items failed
 	 */
-	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], &$total = null )
+	public function searchItems( \Aimeos\MW\Criteria\Iface $search, array $ref = [], int &$total = null ) : array
 	{
 		$map = [];
 		$context = $this->getContext();

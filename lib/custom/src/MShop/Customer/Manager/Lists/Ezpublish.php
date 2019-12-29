@@ -130,26 +130,27 @@ class Ezpublish
 	/**
 	 * Removes old entries from the storage.
 	 *
-	 * @param array $siteids List of IDs for sites whose entries should be deleted
+	 * @param string[] $siteids List of IDs for sites whose entries should be deleted
+	 * @return \Aimeos\MShop\Common\Manager\Iface Same object for fluent interface
 	 */
-	public function clear( array $siteids )
+	public function clear( array $siteids ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		$path = 'mshop/customer/manager/lists/submanagers';
 		foreach( $this->getContext()->getConfig()->get( $path, [] ) as $domain ) {
 			$this->getObject()->getSubManager( $domain )->clear( $siteids );
 		}
 
-		$this->clearBase( $siteids, $this->getConfigPath() . 'delete' );
+		return $this->clearBase( $siteids, $this->getConfigPath() . 'delete' );
 	}
 
 
 	/**
 	 * Returns the attributes that can be used for searching.
 	 *
-	 * @param boolean $withsub Return also attributes of sub-managers if true
+	 * @param bool $withsub Return also attributes of sub-managers if true
 	 * @return array Returns a list of attribtes implementing \Aimeos\MW\Criteria\Attribute\Iface
 	 */
-	public function getSearchAttributes( $withsub = true )
+	public function getSearchAttributes( bool $withsub = true ) : array
 	{
 		$path = 'mshop/customer/manager/lists/submanagers';
 
@@ -164,7 +165,7 @@ class Ezpublish
 	 * @param string|null $name Name of the implementation, will be from configuration (or Default) if null
 	 * @return mixed Manager for different extensions, e.g stock, tags, locations, etc.
 	 */
-	public function getSubManager( $manager, $name = null )
+	public function getSubManager( string $manager, string $name = null ) : \Aimeos\MShop\Common\Manager\Iface
 	{
 		return $this->getSubManagerBase( 'customer', 'lists/' . $manager, ( $name === null ? 'Ezpublish' : $name ) );
 	}
@@ -174,10 +175,10 @@ class Ezpublish
 	 * Updates or adds a common list item object.
 	 *
 	 * @param \Aimeos\MShop\Common\Item\Lists\Iface $item List item object which should be saved
-	 * @param boolean $fetch True if the new ID should be returned in the item
+	 * @param bool $fetch True if the new ID should be returned in the item
 	 * @return \Aimeos\MShop\Common\Item\Lists\Iface $item Updated item including the generated ID
 	 */
-	public function saveItem( \Aimeos\MShop\Common\Item\Lists\Iface $item, $fetch = true )
+	public function saveItem( \Aimeos\MShop\Common\Item\Lists\Iface $item, bool $fetch = true ) : \Aimeos\MShop\Common\Item\Lists\Iface
 	{
 		if( $item->getDomain() === 'customer/group' ) {
 			throw new \Aimeos\MShop\Customer\Exception( sprintf( 'Adding groups to customers is not supported, please use the eZ Publish backend' ) );
@@ -192,7 +193,7 @@ class Ezpublish
 	 *
 	 * @return string Configuration path (mshop/customer/manager/lists/ezpublish/)
 	 */
-	protected function getConfigPath()
+	protected function getConfigPath() : string
 	{
 		return 'mshop/customer/manager/lists/ezpublish/';
 	}
@@ -203,7 +204,7 @@ class Ezpublish
 	 *
 	 * @return array Associative list of search keys and search definitions
 	 */
-	protected function getSearchConfig()
+	protected function getSearchConfig() : array
 	{
 		return $this->searchConfig;
 	}
