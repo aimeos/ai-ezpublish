@@ -19,7 +19,7 @@ class CustomerMigrateListsKeyEzpublish extends TablesMigrateListsKey
 	 *
 	 * @return string[] List of task names
 	 */
-	public function getPreDependencies() : array
+	public function getPreDependencies()
 	{
 		return ['TablesMigrateListsKey'];
 	}
