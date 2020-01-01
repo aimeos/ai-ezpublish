@@ -83,7 +83,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 			->will( $this->returnValue( $result ) );
 
 		$result->expects( $this->exactly( 2 ) )->method( 'fetch' )
-			->will( $this->onConsecutiveCalls( array( 'customer.group.id' => 1 ), false ) );
+			->will( $this->onConsecutiveCalls( array( 'customer.group.id' => 1 ), null ) );
 
 		$result = $mock->searchItems( $mock->createSearch() );
 

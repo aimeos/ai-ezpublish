@@ -494,7 +494,7 @@ class Ezpublish
 
 			$results = $this->searchItemsBase( $conn, $search, $cfgPathSearch, $cfgPathCount, $required, $total, $level );
 
-			while( ( $row = $results->fetch() ) !== false )
+			while( ( $row = $results->fetch() ) !== null )
 			{
 				$map[$row['customer.id']] = $row;
 				$map[$row['customer.id']]['customer.groups'] = [];
@@ -505,7 +505,7 @@ class Ezpublish
 			$stmt = $conn->create( $this->getGroupSql( array_keys( $map ), $path ) );
 			$results = $stmt->execute();
 
-			while( ( $row = $results->fetch() ) !== false ) {
+			while( ( $row = $results->fetch() ) !== null ) {
 				$map[(string) $row['contentobject_id']]['customer.groups'][] = $row['role_id'];
 			}
 
