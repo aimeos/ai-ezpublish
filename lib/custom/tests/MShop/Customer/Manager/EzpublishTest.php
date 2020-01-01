@@ -176,7 +176,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 		$mock->expects( $this->once() )->method( 'searchItemsBase' )->will( $this->returnValue( $result1 ) );
 		$result1->expects( $this->exactly( 2 ) )->method( 'fetch' )
-			->will( $this->onConsecutiveCalls( array( 'customer.id' => -1 ), false ) );
+			->will( $this->onConsecutiveCalls( array( 'customer.id' => -1 ), null ) );
 
 
 		$dbm = $this->getMockBuilder( 'Aimeos\MW\DB\Manager\Iface' )->getMock();
@@ -188,7 +188,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$conn->expects( $this->once() )->method( 'create' )->will( $this->returnValue( $stmt ) );
 		$stmt->expects( $this->once() )->method( 'execute' )->will( $this->returnValue( $result2 ) );
 		$result2->expects( $this->exactly( 2 ) )->method( 'fetch' )
-			->will( $this->onConsecutiveCalls( array( 'contentobject_id' => -1, 'role_id' => -2 ), false ) );
+			->will( $this->onConsecutiveCalls( array( 'contentobject_id' => -1, 'role_id' => -2 ), null ) );
 
 		$dbm->expects( $this->any() )->method( 'release' );
 
