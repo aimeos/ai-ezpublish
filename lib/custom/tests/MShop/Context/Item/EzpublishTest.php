@@ -14,7 +14,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	private $object;
 
 
-	protected function setUp()
+	protected function setUp() : void
 	{
 		if( !interface_exists( 'eZ\Publish\API\Repository\UserService' ) ) {
 			$this->markTestSkipped( 'Install ezsystems/ezpublish-api first' );
@@ -25,7 +25,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	protected function tearDown()
+	protected function tearDown() : void
 	{
 		unset( $this->object, $this->mock );
 	}
@@ -33,7 +33,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 	public function testGetEzUserService()
 	{
-		$this->setExpectedException( '\\Aimeos\\MShop\\Exception' );
+		$this->expectException( '\\Aimeos\\MShop\\Exception' );
 		$this->object->getEzUserService();
 	}
 

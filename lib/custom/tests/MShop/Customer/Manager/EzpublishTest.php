@@ -16,7 +16,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	private $object;
 
 
-	protected function setUp()
+	protected function setUp() : void
 	{
 		if( !interface_exists( 'eZ\Publish\API\Repository\UserService' ) ) {
 			$this->markTestSkipped( 'Install ezsystems/ezpublish-api first' );
@@ -29,15 +29,15 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 	}
 
 
-	protected function tearDown()
+	protected function tearDown() : void
 	{
 		unset( $this->object, $this->context, $this->address );
 	}
 
 
-	public function testCleanup()
+	public function testClear()
 	{
-		$this->object->clear( array( -1 ) );
+		$this->assertInstanceOf( \Aimeos\MShop\Common\Manager\Iface::class, $this->object->clear( array( -1 ) ) );
 	}
 
 
@@ -76,14 +76,14 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$this->assertInstanceOf( \Aimeos\MShop\Common\Manager\Iface::class, $this->object->getSubManager( 'address' ) );
 		$this->assertInstanceOf( \Aimeos\MShop\Common\Manager\Iface::class, $this->object->getSubManager( 'address', 'Standard' ) );
 
-		$this->setExpectedException( \Aimeos\MShop\Exception::class );
+		$this->expectException( \Aimeos\MShop\Exception::class );
 		$this->object->getSubManager( 'unknown' );
 	}
 
 
 	public function testGetSubManagerInvalidName()
 	{
-		$this->setExpectedException( \Aimeos\MShop\Exception::class );
+		$this->expectException( \Aimeos\MShop\Exception::class );
 		$this->object->getSubManager( 'address', 'unknown' );
 	}
 
@@ -160,7 +160,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 
 		$object = new \Aimeos\MShop\Customer\Manager\Ezpublish( $context );
 
-		$this->setExpectedException( \Aimeos\MShop\Customer\Exception::class );
+		$this->expectException( \Aimeos\MShop\Customer\Exception::class );
 		$object->saveItem( new \Aimeos\MShop\Customer\Item\Standard( $this->address ) );
 	}
 
@@ -211,7 +211,7 @@ class EzpublishTest extends \PHPUnit\Framework\TestCase
 		$object->expects( $this->once() )->method( 'searchItemsBase' )
 			->will( $this->throwException( new \Aimeos\MShop\Exception() ) );
 
-		$this->setExpectedException( \Aimeos\MShop\Exception::class );
+		$this->expectException( \Aimeos\MShop\Exception::class );
 		$object->searchItems( $object->createSearch() );
 	}
 }
